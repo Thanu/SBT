@@ -1,0 +1,1 @@
+This is an android app for tracking a school bus. This app will ensure the safety of school children while they commute between school and home by their school bus.

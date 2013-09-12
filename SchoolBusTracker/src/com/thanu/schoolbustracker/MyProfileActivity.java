@@ -28,7 +28,7 @@ import android.widget.Toast;
 public class MyProfileActivity extends Activity implements OnClickListener {
 	EditText uname, password, password1, email, bus_hault, fname, address,
 			phone;
-	Button update, changePassword, save;
+	Button update, changePassword, save,logout;
 	RadioGroup gender;
 	RadioButton button;
 	TextView status;
@@ -45,9 +45,11 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_profile);
-		//initialise();
-		//update.setOnClickListener(this);
-		//changePassword.setOnClickListener(this);
+		initialise();
+		update.setOnClickListener(this);
+		changePassword.setOnClickListener(this);
+		save.setOnClickListener(this);
+		logout.setOnClickListener(this);
 	}
 
 	public void initialise() {
@@ -63,7 +65,8 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		bus_hault = (EditText) findViewById(R.id.bus_hault);
 		changePassword = (Button) findViewById(R.id.btnChangePassword);
 		update = (Button) findViewById(R.id.btnUpdateProfile);
-		update = (Button) findViewById(R.id.btnSave);
+		save = (Button) findViewById(R.id.btnSave);
+		logout = (Button) findViewById(R.id.logout);
 		status = (TextView) findViewById(R.id.register_status);
 
 		Intent intent = getIntent();
@@ -71,7 +74,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		name = bundle.getString("uname");
 		System.out.println(name);
 		
-		new AttemptToRetrieveUser().execute();
+		/*new AttemptToRetrieveUser().execute();
 		
 		uname.setText(user.getUserName());
 		System.out.println(user.getUserName());
@@ -83,7 +86,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		password.setText(user.getPassword());
 		password1.setText(user.getPassword());
 		email.setText(user.getEmail());
-		bus_hault.setText(user.getBus_hault());
+		bus_hault.setText(user.getBus_hault());*/
 
 	}
 
@@ -115,10 +118,20 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		case R.id.btnUpdate:// save changes
 			new AttemptUpdateProfile().execute();
 			break;
+		case R.id.logout:// log out 
+			logout();
+			break;	
 		default:
 			break;
 		}
 
+	}
+	
+	public void logout(){
+		Log.d("Logout!", "Logout success");
+		Intent i = new Intent(getApplicationContext(),
+				MainActivity.class);
+		startActivity(i);
 	}
 	
 	class AttemptToRetrieveUser extends AsyncTask<String, String, String> {

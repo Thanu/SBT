@@ -24,6 +24,10 @@
     <string name="user_name">User Name</string>
     <string name="SignIn">Sign In</string>
     <string name="SignUp">Sign Up</string>
+    <string name="logout">Log out</string>
+    <string name="modify">Modify Route</string>
+    <string name="drop_user">Drop User</string>
+    <string name="announcement">Add Announcement</string>
     <string name="changePassword">Change Password</string>
     <string name="updateProfile">Update Profile</string>
     <string name="save">Save</string>

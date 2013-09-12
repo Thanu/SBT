@@ -57,8 +57,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		@Override
 		protected String doInBackground(String... args) {
 
-			// httpClient = new DefaultHttpClient();
-			// httpPost = new HttpPost("http://10.0.2.2:8080/SBT/signin.php");
 			String url = "http://10.0.2.2:8080/SBT/signin.php";
 			username = uname.getText().toString();
 			password = pword.getText().toString();
@@ -71,17 +69,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 						.add(new BasicNameValuePair("password", password));
 
 				JSONParser parser = new JSONParser();
-
-				/*
-				 * httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-				 * httpResponse = httpClient.execute(httpPost);
-				 * 
-				 * if(httpResponse.getStatusLine().getStatusCode()==200){
-				 * entity= httpResponse.getEntity(); if(entity != null){
-				 * InputStream ins = entity.getContent(); JSONObject
-				 * jsonResponse = new JSONObject(convertStreamToString(ins));
-				 */
-
 				JSONObject jsonResponse = new JSONObject(
 						parser.makeHttpRequest(url, nameValuePairs));
 				String retPword = jsonResponse.getString("password");
@@ -89,11 +76,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 				// validate login
 				if (password.equals(retPword)) {
 					Log.d("Login!", "Login Success");
-					// Intent i = new Intent(getApplicationContext(),
-					// RouteActivity.class);
+					
 					if (username.equals("Admin")) {
 						Intent i = new Intent(getApplicationContext(),
-								Activity.class);
+								AdminActivity.class);
 						i.putExtra("uname", username);
 						startActivity(i);
 					} else {
@@ -117,8 +103,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 					// Toast.makeText(getBaseContext(),"Login unsuccess",Toast.LENGTH_SHORT).show();
 				}
-				// }
-				// }
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.d("Error!", "Connection error");
@@ -128,17 +113,5 @@ public class LoginActivity extends Activity implements OnClickListener {
 			return null;
 		}
 	}
-
-	/*
-	 * private static String convertStreamToString(InputStream is) {
-	 * StringBuilder sb = new StringBuilder(); String line = null; try {
-	 * BufferedReader reader = new BufferedReader(new InputStreamReader( is,
-	 * "iso-8859-1"), 8); while ((line = reader.readLine()) != null) {
-	 * sb.append(line + "\n"); }
-	 * 
-	 * } catch (Exception e) { Log.d("Error in conversion", "Error: " + e);
-	 * e.printStackTrace(); } finally { try { is.close(); } catch (Exception e)
-	 * { e.printStackTrace(); } } return sb.toString(); }
-	 */
 
 }

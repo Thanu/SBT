@@ -31,8 +31,7 @@ public class UserActivity extends TabActivity {
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		String name = bundle.getString("uname");
-		//System.out.println(name);
-
+		System.out.println(name);
 		
 
 		TabHost tabHost = getTabHost();

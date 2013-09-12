@@ -26,8 +26,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	private String username, pword, pword1, mail, busHault;
 	private String firstname, sex, place, phoneNo;
 
-	EditText uname, password, password1, email, bus_hault, fname,
-			address, phone;
+	EditText uname, password, password1, email, bus_hault, fname, address,
+			phone;
 	TextView status;
 	Button register;
 	RadioGroup gender;
@@ -60,8 +60,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		status = (TextView) findViewById(R.id.register_status);
 		register = (Button) findViewById(R.id.btnRegister);
 	}
-	
-	
+
 	public void onClick(View v) {
 		new AttemptLogin().execute();
 	}
@@ -70,12 +69,13 @@ public class RegisterActivity extends Activity implements OnClickListener {
 
 		@Override
 		protected String doInBackground(String... args) {
-			//httpClient = new DefaultHttpClient();
-			//httpPost = new HttpPost("http://10.0.2.2:8080/SBT/signup.php");
+			// httpClient = new DefaultHttpClient();
+			// httpPost = new HttpPost("http://10.0.2.2:8080/SBT/signup.php");
 			username = uname.getText().toString();
-			firstname = fname.getText().toString();			
-			button = (RadioButton)findViewById(gender.getCheckedRadioButtonId());
-			sex= button.getText().toString();
+			firstname = fname.getText().toString();
+			button = (RadioButton) findViewById(gender
+					.getCheckedRadioButtonId());
+			sex = button.getText().toString();
 			place = address.getText().toString();
 			phoneNo = phone.getText().toString();
 			pword = password.getText().toString();
@@ -84,11 +84,11 @@ public class RegisterActivity extends Activity implements OnClickListener {
 			busHault = bus_hault.getText().toString();
 
 			try {
-				
+
 				if (pword.equals(pword1)) {
 					String url = "http://10.0.2.2:8080/SBT/signup.php";
 					JSONParser parser = new JSONParser();
-					
+
 					nameValuePairs = new ArrayList<NameValuePair>();
 
 					nameValuePairs.add(new BasicNameValuePair("username",
@@ -105,45 +105,39 @@ public class RegisterActivity extends Activity implements OnClickListener {
 					nameValuePairs.add(new BasicNameValuePair("bus_hault",
 							busHault));
 
-					/*httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-					httpResponse = httpClient.execute(httpPost);
+					String success = parser
+							.makeHttpRequest(url, nameValuePairs).trim();
 
-					if (httpResponse.getStatusLine().getStatusCode() == 200) {
-						entity = httpResponse.getEntity();
-						if (entity != null) {
-							InputStream ins = entity.getContent();*/
-							String success = parser.makeHttpRequest(url, nameValuePairs).trim();
-							
-							// validate registration
-							if (success.equalsIgnoreCase("true")) {
-								Log.d("Register!", "Register Success");
-								Intent i = new Intent(getApplicationContext(),
-										UserActivity.class);
-								i.putExtra("uname",username);
-								startActivity(i);
-								// Toast.makeText(getBaseContext(), "SUCCESS",
-								// Toast.LENGTH_LONG).show();
+					// validate registration
+					if (success.equalsIgnoreCase("true")) {
+						Log.d("Register!", "Register Success");
+						Intent i = new Intent(getApplicationContext(),
+								UserActivity.class);
+						i.putExtra("uname", username);
+						startActivity(i);
+						// Toast.makeText(getBaseContext(), "SUCCESS",
+						// Toast.LENGTH_LONG).show();
 
-							} else {
-								runOnUiThread(new Runnable() {
-									@Override
-									public void run() {
-										status.setText("You are not registered. Try again");
-										uname.setText("");
-										fname.setText("");
-										gender.clearCheck();
-										address.setText("");
-										phone.setText("");
-										password.setText("");
-										password1.setText("");
-										email.setText("");
-										bus_hault.setText("");
-										
-									}
-								});
+					} else {
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								status.setText("You are not registered. Try again");
+								uname.setText("");
+								fname.setText("");
+								gender.clearCheck();
+								address.setText("");
+								phone.setText("");
+								password.setText("");
+								password1.setText("");
+								email.setText("");
+								bus_hault.setText("");
+
 							}
-						//}
-					//}
+						});
+					}
+					// }
+					// }
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -154,30 +148,5 @@ public class RegisterActivity extends Activity implements OnClickListener {
 			return null;
 		}
 	}
-
-	/*private static String convertStreamToString(InputStream is) {
-		StringBuilder sb = new StringBuilder();
-		String line = null;
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-
-		} catch (Exception e) {
-			Log.d("Error in conversion", "Error: " + e);
-			e.printStackTrace();
-		} finally {
-			try {
-				is.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		Log.d("Response!", sb.toString());
-		return sb.toString();
-
-	}*/
 
 }

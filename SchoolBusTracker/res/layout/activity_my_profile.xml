@@ -7,6 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MyProfileActivity" >
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -77,7 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:enabled ="false"
+                        android:enabled="false"
                         android:text="@string/male" />
 
                     <RadioButton
@@ -86,7 +87,6 @@
                         android:layout_height="wrap_content"
                         android:enabled="false"
                         android:text="@string/female" />
-
                 </RadioGroup>
 
                 <TextView
@@ -202,35 +202,30 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
-                    android:onClick="register"
                     android:text="@string/changePassword" />
-                
-                  <Button
+
+                <Button
                     android:id="@+id/btnUpdateProfile"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
-                    android:onClick="register"
                     android:text="@string/updateProfile" />
-                  
-                  <Button
-                      android:id="@+id/btnSave"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="10dip"
-                      android:onClick="register"
-                      android:text="@string/save"
-                      android:visibility="invisible" />
-                  
-                  <Button
-                      android:id="@+id/btnUpdate"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="10dip"
-                      android:onClick="register"
-                      android:text="@string/update"
-                      android:visibility="invisible" />
-               
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:text="@string/save"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/btnUpdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:text="@string/update"
+                    android:visibility="invisible" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
@@ -241,6 +236,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Button" />
+        android:text="@string/logout" />
 
 </RelativeLayout>
