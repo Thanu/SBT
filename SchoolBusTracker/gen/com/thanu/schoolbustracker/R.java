@@ -192,7 +192,7 @@ containing a value of this type.
     public static final class id {
         public static final int action_settings=0x7f05002d;
         public static final int address=0x7f05001b;
-        public static final int admin_logout=0x7f050007;
+        public static final int admin_logout=0x7f05000a;
         public static final int btnChangePassword=0x7f050025;
         public static final int btnLogin=0x7f05000f;
         public static final int btnRegister=0x7f05002a;
@@ -213,10 +213,10 @@ containing a value of this type.
         public static final int logout=0x7f050029;
         public static final int male=0x7f050018;
         public static final int map=0x7f05002c;
-        public static final int modifyRoute=0x7f05000a;
+        public static final int modifyRoute=0x7f050008;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
-        public static final int notification=0x7f050008;
+        public static final int notification=0x7f050007;
         public static final int password=0x7f05001e;
         public static final int password1=0x7f050020;
         public static final int phone=0x7f05001d;

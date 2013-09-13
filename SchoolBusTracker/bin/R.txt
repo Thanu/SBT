@@ -61,7 +61,7 @@ int drawable marker 0x7f02001f
 int drawable sbt_icon 0x7f020020
 int id action_settings 0x7f05002d
 int id address 0x7f05001b
-int id admin_logout 0x7f050007
+int id admin_logout 0x7f05000a
 int id btnChangePassword 0x7f050025
 int id btnLogin 0x7f05000f
 int id btnRegister 0x7f05002a
@@ -82,10 +82,10 @@ int id info 0x7f050011
 int id logout 0x7f050029
 int id male 0x7f050018
 int id map 0x7f05002c
-int id modifyRoute 0x7f05000a
+int id modifyRoute 0x7f050008
 int id none 0x7f050000
 int id normal 0x7f050001
-int id notification 0x7f050008
+int id notification 0x7f050007
 int id password 0x7f05001e
 int id password1 0x7f050020
 int id phone 0x7f05001d

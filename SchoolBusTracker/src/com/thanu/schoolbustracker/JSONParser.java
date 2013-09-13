@@ -41,10 +41,10 @@ public class JSONParser {
 		try {
 
 			httpPost.setEntity(new UrlEncodedFormEntity(param));
-			httpResponse = httpClient.execute(httpPost);
+			httpResponse = httpClient.execute(httpPost);//getting httpResponse
 
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
-				entity = httpResponse.getEntity();
+				entity = httpResponse.getEntity();//get the entity
 				if (entity != null) {
 					InputStream ins = entity.getContent();
 					response = convertStreamToString(ins);					
@@ -53,13 +53,13 @@ public class JSONParser {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.d("Error!", "Connection error");
-			//Log.d("Error!", e.getMessage());
 			// Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
 		}
 		return response;
 	}
 
 	private static String convertStreamToString(InputStream is) {
+		//parsing response into a string
 		StringBuilder sb = new StringBuilder();
 		String line = null;
 		try {

@@ -20,7 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+//Activity for login action
 public class LoginActivity extends Activity implements OnClickListener {
 	private String username, password;
 	EditText uname, pword;
@@ -40,7 +40,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		login.setOnClickListener(this);
 	}
 
-	private void initialise() {
+	private void initialise() {//get the elements
 		uname = (EditText) findViewById(R.id.uname);
 		pword = (EditText) findViewById(R.id.pword);
 		status = (TextView) findViewById(R.id.status);
@@ -57,11 +57,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 		@Override
 		protected String doInBackground(String... args) {
 
-			String url = "http://10.0.2.2:8080/SBT/signin.php";
+			String url = "http://10.0.2.2:8080/SBT/signin.php";//url of php file needed for login
 			username = uname.getText().toString();
 			password = pword.getText().toString();
 
 			try {
+				
 				nameValuePairs = new ArrayList<NameValuePair>();
 				nameValuePairs
 						.add(new BasicNameValuePair("username", username));
@@ -70,31 +71,32 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 				JSONParser parser = new JSONParser();
 				JSONObject jsonResponse = new JSONObject(
-						parser.makeHttpRequest(url, nameValuePairs));
-				String retPword = jsonResponse.getString("password");
+						parser.makeHttpRequest(url, nameValuePairs));//calling http POST method
+				String retPword = jsonResponse.getString("password");//password received from signin.php
 
 				// validate login
-				if (password.equals(retPword)) {
+				if (password.equals(retPword)) {//if entered password equals to database password
 					Log.d("Login!", "Login Success");
 					
-					if (username.equals("Admin")) {
+					if (username.equals("Admin")) {//if the user is admin
 						Intent i = new Intent(getApplicationContext(),
 								AdminActivity.class);
 						i.putExtra("uname", username);
-						startActivity(i);
+						startActivity(i);//starting the admin account
 					} else {
 						Intent i = new Intent(getApplicationContext(),
 								UserActivity.class);
 						i.putExtra("uname", username);
-						startActivity(i);
+						startActivity(i);//starting the user account
 					}
 
-				} else {
+				} else {//if login failed
 					Log.d("Login!", "Login Not Success");
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							status.setText("Your usernsme or passsword is incorrect");
+							status.setText("Your usernsme or passsword is incorrect");//give error msg
+							//empty the username, password text box
 							uname.setText("");
 							pword.setText("");
 

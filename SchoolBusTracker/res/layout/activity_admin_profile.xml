@@ -40,28 +40,28 @@
 
                 <Button
                     android:id="@+id/notification"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/announcement" />
 
-
                 <Button
                     android:id="@+id/modifyRoute"
-                    android:layout_width="fill_parent"
+                    android:layout_width="182dp"
                     android:layout_height="wrap_content"
                     android:text="@string/modify" />
                 
                 <Button
                     android:id="@+id/dropUser"
-                    android:layout_width="fill_parent"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:text="@string/drop_user" />
 
                 <Button
                     android:id="@+id/admin_logout"
-                    android:layout_width="fill_parent"
+                    android:layout_width="178dp"
                     android:layout_height="wrap_content"
                     android:text="@string/logout" />
+
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

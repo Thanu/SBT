@@ -26,6 +26,7 @@ public class AdminProfileActivity extends Activity implements OnClickListener {
 	}
 	
 	public void logout(){
+		//log out from the account
 		Log.d("Logout!", "Logout success");
 		Intent i = new Intent(getApplicationContext(),
 				MainActivity.class);

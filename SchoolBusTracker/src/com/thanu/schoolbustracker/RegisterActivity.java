@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
+//Activity for registration action
 public class RegisterActivity extends Activity implements OnClickListener {
 
 	private String username, pword, pword1, mail, busHault;
@@ -47,7 +47,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		register.setOnClickListener(this);
 	}
 
-	private void initialise() {
+	private void initialise() {//getting elements of activity_register
 		uname = (EditText) findViewById(R.id.uname);
 		fname = (EditText) findViewById(R.id.fname);
 		gender = (RadioGroup) findViewById(R.id.gender);
@@ -62,15 +62,14 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	}
 
 	public void onClick(View v) {
-		new AttemptLogin().execute();
+		new AttemptRegister().execute();
 	}
 
-	class AttemptLogin extends AsyncTask<String, String, String> {
+	class AttemptRegister extends AsyncTask<String, String, String> {
 
 		@Override
 		protected String doInBackground(String... args) {
-			// httpClient = new DefaultHttpClient();
-			// httpPost = new HttpPost("http://10.0.2.2:8080/SBT/signup.php");
+			
 			username = uname.getText().toString();
 			firstname = fname.getText().toString();
 			button = (RadioButton) findViewById(gender
@@ -84,9 +83,9 @@ public class RegisterActivity extends Activity implements OnClickListener {
 			busHault = bus_hault.getText().toString();
 
 			try {
-
-				if (pword.equals(pword1)) {
-					String url = "http://10.0.2.2:8080/SBT/signup.php";
+				if (pword.equals(pword1)) {//if the password and re-entered password are equal
+					
+					String url = "http://10.0.2.2:8080/SBT/signup.php";//url of the signup.php
 					JSONParser parser = new JSONParser();
 
 					nameValuePairs = new ArrayList<NameValuePair>();
@@ -106,7 +105,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 							busHault));
 
 					String success = parser
-							.makeHttpRequest(url, nameValuePairs).trim();
+							.makeHttpRequest(url, nameValuePairs).trim();//getting the response from httpPOST request
 
 					// validate registration
 					if (success.equalsIgnoreCase("true")) {
@@ -115,9 +114,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 								UserActivity.class);
 						i.putExtra("uname", username);
 						startActivity(i);
-						// Toast.makeText(getBaseContext(), "SUCCESS",
-						// Toast.LENGTH_LONG).show();
-
+						
 					} else {
 						runOnUiThread(new Runnable() {
 							@Override
@@ -136,8 +133,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 							}
 						});
 					}
-					// }
-					// }
+					
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

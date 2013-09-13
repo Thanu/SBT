@@ -1,7 +1,6 @@
 package com.thanu.schoolbustracker;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.view.Menu;
@@ -16,7 +15,9 @@ public class AdminActivity extends TabActivity {
 		setContentView(R.layout.activity_admin);
 
 		TabHost tabHost = getTabHost();
-		// Tab for Admin functions
+		
+		
+		// Tab for Admin functions		
 		TabSpec profilespec = tabHost.newTabSpec("AdminPage");
 		// setting Title and Icon for the Tab
 		profilespec.setIndicator("Admin",
