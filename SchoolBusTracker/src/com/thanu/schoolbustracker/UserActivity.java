@@ -23,6 +23,7 @@ public class UserActivity extends TabActivity {
 	HttpEntity entity;
 	
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,7 +39,7 @@ public class UserActivity extends TabActivity {
 		// Tab for Profile
 		TabSpec profilespec = tabHost.newTabSpec("MyProfile");
 		// setting Title and Icon for the Tab
-		profilespec.setIndicator(name,
+		profilespec.setIndicator("",
 				getResources().getDrawable(R.drawable.icon_profile_tab));
 		Intent profileIntent = new Intent(this, MyProfileActivity.class);
 		profileIntent.putExtra("uname",name);
@@ -46,14 +47,14 @@ public class UserActivity extends TabActivity {
 
 		// Tab for notification
 		TabSpec notificationspec = tabHost.newTabSpec("Notifications");
-		notificationspec.setIndicator("Notifications", getResources()
+		notificationspec.setIndicator("", getResources()
 				.getDrawable(R.drawable.icon_notification_tab));
 		Intent notificationIntent = new Intent(this, NotificationActivity.class);
 		notificationspec.setContent(notificationIntent);
 
 		// Tab for route
 		TabSpec routespec = tabHost.newTabSpec("Route");
-		routespec.setIndicator("Route",
+		routespec.setIndicator("",
 				getResources().getDrawable(R.drawable.icon_route_tab));
 		Intent routeIntent = new Intent(this, RouteActivity.class);
 		routespec.setContent(routeIntent);

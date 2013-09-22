@@ -8,6 +8,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -26,9 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyProfileActivity extends Activity implements OnClickListener {
-	EditText uname, password, password1, email, bus_hault, fname, address,
-			phone;
-	Button update, changePassword, save,logout;
+	EditText txt_uname, txt_password, txt_password1, txt_email, txt_bus_hault,
+			txt_fname, txt_address, txt_phone;
+	Button updateProfile, update, changePassword, save, logout;
 	RadioGroup gender;
 	RadioButton button;
 	TextView status;
@@ -38,14 +39,16 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 	ArrayList<NameValuePair> nameValuePairs;
 	HttpResponse httpResponse;
 	HttpEntity entity;
-	String pword, pword1, fullname, place, phoneNo, mail, busHault,name;
-	User user = new User();
+	String pword, pword1, fullname, place, phoneNo, mail, busHault, name;
+	String userName, password, email, bus_hault, fullName, sex, address, phone;
+	User user;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_profile);
 		initialise();
+		updateProfile.setOnClickListener(this);
 		update.setOnClickListener(this);
 		changePassword.setOnClickListener(this);
 		save.setOnClickListener(this);
@@ -54,18 +57,19 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 
 	public void initialise() {
 
-		uname = (EditText) findViewById(R.id.uname);
-		fname = (EditText) findViewById(R.id.fname);
+		txt_uname = (EditText) findViewById(R.id.uname);
+		txt_fname = (EditText) findViewById(R.id.fname);
 		gender = (RadioGroup) findViewById(R.id.gender);
-		address = (EditText) findViewById(R.id.address);
-		phone = (EditText) findViewById(R.id.phone);
-		password = (EditText) findViewById(R.id.password);
-		password1 = (EditText) findViewById(R.id.password1);
-		email = (EditText) findViewById(R.id.email);
-		bus_hault = (EditText) findViewById(R.id.bus_hault);
+		txt_address = (EditText) findViewById(R.id.address);
+		txt_phone = (EditText) findViewById(R.id.phone);
+		txt_password = (EditText) findViewById(R.id.password);
+		txt_password1 = (EditText) findViewById(R.id.password1);
+		txt_email = (EditText) findViewById(R.id.email);
+		txt_bus_hault = (EditText) findViewById(R.id.bus_hault);
 		changePassword = (Button) findViewById(R.id.btnChangePassword);
-		update = (Button) findViewById(R.id.btnUpdateProfile);
+		updateProfile = (Button) findViewById(R.id.btnUpdateProfile);
 		save = (Button) findViewById(R.id.btnSave);
+		update = (Button) findViewById(R.id.btnUpdate);
 		logout = (Button) findViewById(R.id.logout);
 		status = (TextView) findViewById(R.id.register_status);
 
@@ -73,20 +77,8 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		Bundle bundle = intent.getExtras();
 		name = bundle.getString("uname");
 		System.out.println(name);
-		
-		/*new AttemptToRetrieveUser().execute();
-		
-		uname.setText(user.getUserName());
-		System.out.println(user.getUserName());
-		fname.setText(user.getFullName());System.out.println(user.getFullName());
-		int genderId = user.getGender().equals("Male") ? 0 : 1;System.out.println(user.getGender());
-		gender.check(genderId);
-		address.setText(user.getAddress());System.out.println(user.getAddress());
-		phone.setText(user.getPhone());
-		password.setText(user.getPassword());
-		password1.setText(user.getPassword());
-		email.setText(user.getEmail());
-		bus_hault.setText(user.getBus_hault());*/
+
+		new AttemptToRetrieveUser().execute();
 
 	}
 
@@ -101,63 +93,101 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btnUpdateProfile:// updating profile
-			fname.setEnabled(true);
-			address.setEnabled(true);
-			phone.setEnabled(true);
-			email.setEnabled(true);
-			fname.setFocusable(true);
+			txt_fname.setEnabled(true);
+			txt_address.setEnabled(true);
+			txt_phone.setEnabled(true);
+			txt_email.setEnabled(true);
+			txt_bus_hault.setEnabled(true);
+			txt_fname.setFocusable(true);
+			update.setEnabled(true);
+			update.setClickable(true);
 			break;
 		case R.id.btnChangePassword:// change password
-			password.setEnabled(true);
-			password1.setEnabled(true);
-			password.setFocusable(true);
+			txt_password.setEnabled(true);
+			txt_password1.setEnabled(true);
+			txt_password.setClickable(true);
+			txt_password1.setClickable(true);
+			txt_password.setFocusable(true);
+			save.setEnabled(true);
+			save.setClickable(true);
 			break;
-		case R.id.btnSave:// save changes
+		case R.id.btnSave:// save changes;
 			new AttemptSavePassword().execute();
 			break;
 		case R.id.btnUpdate:// save changes
 			new AttemptUpdateProfile().execute();
 			break;
-		case R.id.logout:// log out 
+		case R.id.logout:// log out
 			logout();
-			break;	
+			break;
 		default:
 			break;
 		}
 
 	}
-	
-	public void logout(){
+
+	public void logout() {
 		Log.d("Logout!", "Logout success");
-		Intent i = new Intent(getApplicationContext(),
-				MainActivity.class);
+		Intent i = new Intent(getApplicationContext(), MainActivity.class);
 		startActivity(i);
 	}
-	
+
 	class AttemptToRetrieveUser extends AsyncTask<String, String, String> {
 
 		@Override
 		protected String doInBackground(String... args) {
 			String url = "http://10.0.2.2:8080/SBT/getUser.php";
 			JSONParser parser = new JSONParser();
-			
+
 			try {
 				nameValuePairs = new ArrayList<NameValuePair>();
 
 				nameValuePairs.add(new BasicNameValuePair("username", name));
 
-				JSONObject jsonResponse = new JSONObject(parser.makeHttpRequest(
-						url, nameValuePairs));
-				System.out.println("JSONResponse:"+jsonResponse);
-				user.setUserName(jsonResponse.getString("username"));
-				user.setFullName(jsonResponse.getString("full_name"));
-				user.setGender(jsonResponse.getString("gender"));
-				user.setAddress(jsonResponse.getString("address"));
-				user.setPhone(jsonResponse.getString("phone_no"));
-				user.setPassword(jsonResponse.getString("password"));
-				user.setEmail(jsonResponse.getString("email"));
-				user.setBus_hault(jsonResponse.getString("bus_hault"));
+				JSONObject jsonResponse = new JSONObject(
+						parser.makeHttpRequest(url, nameValuePairs));
+				System.out.println("JSONResponse:" + jsonResponse);
 
+				userName = jsonResponse.getString("username");
+				fullName = jsonResponse.getString("full_name");
+				sex = jsonResponse.getString("gender");
+				address = jsonResponse.getString("address");
+				phone = jsonResponse.getString("phone_no");
+				password = jsonResponse.getString("password");
+				email = jsonResponse.getString("email");
+				bus_hault = jsonResponse.getString("bus_hault");
+
+				user = new User(userName, fullName, sex, address, phone,
+						password, email, bus_hault);
+				// System.out.println("User name of :"+user.getUserName());
+
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						txt_uname.setText(userName);
+						// System.out.println("Username:"+userName);
+						txt_fname.setText(fullName);
+						System.out.println(fullName);
+						int genderId = sex.equals("Male") ? 0 : 1;
+						System.out.println(sex);
+						gender.check(genderId);
+						txt_address.setText(address);
+						System.out.println(address);
+						txt_phone.setText(phone);
+						txt_password.setText(password);
+						txt_password1.setText(password);
+						txt_email.setText(email);
+						txt_bus_hault.setText(bus_hault);
+
+					}
+				});
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+				Log.d("Error!", "JSONException");
+				Log.d("Error!", e.toString());
+				// Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.d("Error!", "Connection error");
@@ -167,8 +197,6 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 			return null;
 		}
 	}
-			
-		
 
 	class AttemptSavePassword extends AsyncTask<String, String, String> {
 
@@ -176,34 +204,37 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		protected String doInBackground(String... args) {
 			String url = "http://10.0.2.2:8080/SBT/changePassword.php";
 
-			pword = password.getText().toString();
-			pword1 = password1.getText().toString();
+			pword = txt_password.getText().toString();
+			pword1 = txt_password1.getText().toString();
+
 			try {
 
 				if (pword.equals(pword1)) {
 					JSONParser parser = new JSONParser();
-					nameValuePairs.add(new BasicNameValuePair("username",name));
-					nameValuePairs.add(new BasicNameValuePair("password", pword));
+					nameValuePairs
+							.add(new BasicNameValuePair("username", name));
+					nameValuePairs
+							.add(new BasicNameValuePair("password", pword));
 
-					String success = parser
-							.makeHttpRequest(url, nameValuePairs).trim();
-
+					String success = parser.makeHttpRequest(url, nameValuePairs).trim();
+					// validate password update
 					if (success.equalsIgnoreCase("true")) {
 						Log.d("Password!", "Password changed");
 						runOnUiThread(new Runnable() {
-
 							@Override
 							public void run() {
 								Toast.makeText(getBaseContext(),
 										"Password Changed", Toast.LENGTH_SHORT)
 										.show();
+								txt_password.setEnabled(false);
+								txt_password1.setEnabled(false);
 							}
 						});
-						password.setEnabled(false);
-						password1.setEnabled(false);
+						
 
 					} else {
 						Log.d("Password!", "Password not changed");
+						Log.d("Success", success + "9");
 						runOnUiThread(new Runnable() {
 
 							@Override
@@ -211,8 +242,8 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 								Toast.makeText(getBaseContext(),
 										"Password mismatching",
 										Toast.LENGTH_SHORT).show();
-								password.setText("");
-								password1.setText("");
+								txt_password.setText("");
+								txt_password1.setText("");
 
 							}
 						});
@@ -233,16 +264,16 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		@Override
 		protected String doInBackground(String... args) {
 			String url = "http://10.0.2.2:8080/SBT/updateProfile.php";
-			fullname = fname.getText().toString();
-			place = address.getText().toString();
-			phoneNo = phone.getText().toString();
-			mail = email.getText().toString();
-			busHault = bus_hault.getText().toString();
+			fullname = txt_fname.getText().toString();
+			place = txt_address.getText().toString();
+			phoneNo = txt_phone.getText().toString();
+			mail = txt_email.getText().toString();
+			busHault = txt_bus_hault.getText().toString();
 
 			try {
 				JSONParser parser = new JSONParser();
 				nameValuePairs = new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("username",name));
+				nameValuePairs.add(new BasicNameValuePair("username", name));
 				nameValuePairs
 						.add(new BasicNameValuePair("fullname", fullname));
 				nameValuePairs.add(new BasicNameValuePair("address", place));
@@ -251,8 +282,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 				nameValuePairs
 						.add(new BasicNameValuePair("bus_hault", busHault));
 
-				String success = parser.makeHttpRequest(url, nameValuePairs)
-						.trim();
+				String success = parser.makeHttpRequest(url, nameValuePairs).trim();
 
 				if (success.equalsIgnoreCase("true")) {
 					Log.d("Profile Update!", "Profile updated");
@@ -266,6 +296,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 
 				} else {
 					Log.d("Profile Update!", "Profile not updated");
+					Log.d("Success", success);
 
 					runOnUiThread(new Runnable() {
 
@@ -274,11 +305,11 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 							Toast.makeText(getBaseContext(),
 									"Profile Not Updated", Toast.LENGTH_SHORT)
 									.show();
-							fname.setEnabled(true);
-							address.setEnabled(true);
-							phone.setEnabled(true);
-							email.setEnabled(true);
-							fname.setFocusable(true);
+							txt_fname.setEnabled(true);
+							txt_address.setEnabled(true);
+							txt_phone.setEnabled(true);
+							txt_email.setEnabled(true);
+							txt_fname.setFocusable(true);
 						}
 					});
 

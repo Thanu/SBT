@@ -188,9 +188,10 @@ containing a value of this type.
         public static final int icon_route_tab=0x7f02001e;
         public static final int marker=0x7f02001f;
         public static final int sbt_icon=0x7f020020;
+        public static final int splash=0x7f020021;
     }
     public static final class id {
-        public static final int action_settings=0x7f05002d;
+        public static final int action_settings=0x7f05002e;
         public static final int address=0x7f05001b;
         public static final int admin_logout=0x7f05000a;
         public static final int btnChangePassword=0x7f050025;
@@ -209,6 +210,7 @@ containing a value of this type.
         public static final int gender=0x7f050017;
         public static final int header=0x7f050006;
         public static final int hybrid=0x7f050004;
+        public static final int imgLogo=0x7f05002d;
         public static final int info=0x7f050011;
         public static final int logout=0x7f050029;
         public static final int male=0x7f050018;
@@ -244,9 +246,11 @@ containing a value of this type.
         public static final int activity_main=0x7f030003;
         public static final int activity_my_profile=0x7f030004;
         public static final int activity_notification=0x7f030005;
-        public static final int activity_register=0x7f030006;
-        public static final int activity_route=0x7f030007;
-        public static final int activity_user=0x7f030008;
+        public static final int activity_notification_receiver=0x7f030006;
+        public static final int activity_register=0x7f030007;
+        public static final int activity_route=0x7f030008;
+        public static final int activity_splash_screen=0x7f030009;
+        public static final int activity_user=0x7f03000a;
     }
     public static final class menu {
         public static final int admin=0x7f090000;
@@ -255,9 +259,11 @@ containing a value of this type.
         public static final int main=0x7f090003;
         public static final int my_profile=0x7f090004;
         public static final int notification=0x7f090005;
-        public static final int register=0x7f090006;
-        public static final int route=0x7f090007;
-        public static final int user=0x7f090008;
+        public static final int notification_receiver=0x7f090006;
+        public static final int register=0x7f090007;
+        public static final int route=0x7f090008;
+        public static final int splash_screen=0x7f090009;
+        public static final int user=0x7f09000a;
     }
     public static final class string {
         public static final int SignIn=0x7f06002a;
@@ -346,13 +352,14 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f06000e;
-        public static final int description=0x7f060034;
+        public static final int create=0x7f060033;
+        public static final int description=0x7f060035;
         public static final int drop_user=0x7f06002e;
         public static final int email=0x7f060024;
         public static final int female=0x7f060021;
         public static final int fname=0x7f06001e;
         public static final int gender=0x7f06001f;
-        public static final int hello_world=0x7f060038;
+        public static final int hello_world=0x7f060039;
         public static final int login=0x7f06001a;
         public static final int logout=0x7f06002c;
         public static final int male=0x7f060020;
@@ -364,16 +371,18 @@ containing a value of this type.
         public static final int result=0x7f060028;
         public static final int save=0x7f060032;
         public static final int status=0x7f060027;
-        public static final int title_activity_admin=0x7f060037;
-        public static final int title_activity_admin_profile=0x7f06003b;
+        public static final int title_activity_admin=0x7f060038;
+        public static final int title_activity_admin_profile=0x7f06003c;
         public static final int title_activity_login=0x7f060019;
-        public static final int title_activity_my_profile=0x7f06003a;
-        public static final int title_activity_notification=0x7f060039;
-        public static final int title_activity_register=0x7f060035;
+        public static final int title_activity_my_profile=0x7f06003b;
+        public static final int title_activity_notification=0x7f06003a;
+        public static final int title_activity_notification_receiver=0x7f06003e;
+        public static final int title_activity_register=0x7f060036;
         public static final int title_activity_route=0x7f060018;
-        public static final int title_activity_user=0x7f060036;
+        public static final int title_activity_splash_screen=0x7f06003d;
+        public static final int title_activity_user=0x7f060037;
         public static final int uname=0x7f06001b;
-        public static final int update=0x7f060033;
+        public static final int update=0x7f060034;
         public static final int updateProfile=0x7f060031;
         public static final int user_name=0x7f060029;
         public static final int welcome=0x7f060017;

@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -37,8 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dip"
                     android:layout_marginTop="5dip"
-                    android:clickable="false"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:inputType="text"
                     android:singleLine="true" />
 
@@ -55,8 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dip"
                     android:layout_marginTop="5dip"
-                    android:clickable="false"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:inputType="text"
                     android:singleLine="true" />
 
@@ -77,15 +75,14 @@
                         android:id="@+id/male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:enabled="false"
+                        android:clickable="false"
                         android:text="@string/male" />
 
                     <RadioButton
                         android:id="@+id/female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
+                        android:clickable="false"
                         android:text="@string/female" />
                 </RadioGroup>
 
@@ -102,8 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dip"
                     android:layout_marginTop="5dip"
-                    android:clickable="false"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:inputType="text"
                     android:singleLine="true" />
 
@@ -120,8 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dip"
                     android:layout_marginTop="5dip"
-                    android:clickable="false"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:inputType="phone"
                     android:singleLine="true" />
 
@@ -138,8 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dip"
                     android:layout_marginTop="5dip"
-                    android:clickable="false"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:inputType="textPassword"
                     android:singleLine="true" />
 
@@ -156,8 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dip"
                     android:layout_marginTop="5dip"
-                    android:clickable="false"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:inputType="textPassword"
                     android:singleLine="true" />
 
@@ -173,8 +166,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dip"
-                    android:clickable="false"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:inputType="textEmailAddress"
                     android:singleLine="true" />
 
@@ -191,22 +183,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dip"
                     android:layout_marginTop="5dip"
-                    android:clickable="false"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:inputType="text" />
 
                 <!-- Register Button -->
 
                 <Button
                     android:id="@+id/btnChangePassword"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
                     android:text="@string/changePassword" />
 
                 <Button
                     android:id="@+id/btnUpdateProfile"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
                     android:text="@string/updateProfile" />
@@ -216,8 +207,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
-                    android:text="@string/save"
-                    android:visibility="invisible" />
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:text="@string/save" />
 
                 <Button
                     android:id="@+id/btnUpdate"
@@ -225,7 +217,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
                     android:text="@string/update"
-                    android:visibility="invisible" />
+                    android:clickable="false" 
+                    android:enabled="false" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

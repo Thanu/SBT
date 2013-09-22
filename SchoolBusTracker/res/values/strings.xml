@@ -31,6 +31,7 @@
     <string name="changePassword">Change Password</string>
     <string name="updateProfile">Update Profile</string>
     <string name="save">Save</string>
+    <string name="create">Create Notifications</string>
     <string name="update">Update</string>
     <string name="description">This is a school bus tracker system......</string>
     <string name="title_activity_register">Register Here</string>
@@ -40,5 +41,7 @@
     <string name="title_activity_notification">NotificationActivity</string>
     <string name="title_activity_my_profile">MyProfileActivity</string>
     <string name="title_activity_admin_profile">ProfileActivity</string>
-  
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="title_activity_notification_receiver">NotificationReceiverActivity</string>
+
 </resources>
