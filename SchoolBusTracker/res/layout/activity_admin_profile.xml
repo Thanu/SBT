@@ -6,64 +6,80 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_activity_admin" />
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/title_activity_admin"
+        android:textColor="#025f7c"
+        android:textSize="20sp" />
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true" >
+        android:layout_height="462dp" >
 
-        <RelativeLayout
+        <Button
+            android:id="@+id/btnModifyRoute"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnDropUser"
+            android:layout_alignLeft="@+id/btnDropUser"
+            android:layout_marginBottom="20dp"
+            android:text="@string/modify" />
+
+        <Button
+            android:id="@+id/btnAnnouncement"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnModifyRoute"
+            android:layout_alignLeft="@+id/btnModifyRoute"
+            android:layout_marginBottom="22dp"
+            android:text="@string/announcement" />
+
+        <Button
+            android:id="@+id/btnDropUser"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnAdmin_logout"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="16dp"
+            android:text="@string/drop_user" />
+
+        <Button
+            android:id="@+id/btnAdmin_logout"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="32dp"
+            android:text="@string/logout" />
+
+        <EditText
+            android:id="@+id/drop_uder_id"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btnDropUser"
+            android:layout_alignBottom="@+id/btnDropUser"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@+id/btnDropUser"
+            android:ems="10"
+            android:inputType="text"
+            android:singleLine="true" />
+
+        <LinearLayout
+            android:id="@+id/header"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnAnnouncement"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="14dp"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip" >
 
-            <LinearLayout
-                android:id="@+id/header"
-                android:layout_width="fill_parent"
+            <ImageView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dip"
-                android:paddingTop="35dip" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.20"
-                    android:src="@drawable/sbt_icon" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/header"
-                android:orientation="vertical"
-                android:padding="10dip" >
-
-                <Button
-                    android:id="@+id/notification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/announcement" />
-
-                <Button
-                    android:id="@+id/modifyRoute"
-                    android:layout_width="182dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/modify" />
-                
-                <Button
-                    android:id="@+id/dropUser"
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/drop_user" />
-
-                <Button
-                    android:id="@+id/admin_logout"
-                    android:layout_width="178dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/logout" />
-
-            </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
+                android:layout_weight="0.25"
+                android:src="@drawable/sbt_icon" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </merge>

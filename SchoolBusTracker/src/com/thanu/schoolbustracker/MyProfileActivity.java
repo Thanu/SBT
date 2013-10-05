@@ -31,7 +31,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 			txt_fname, txt_address, txt_phone;
 	Button updateProfile, update, changePassword, save, logout;
 	RadioGroup gender;
-	RadioButton button;
+	RadioButton male,female,button;
 	TextView status;
 
 	HttpClient httpClient;
@@ -60,6 +60,8 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		txt_uname = (EditText) findViewById(R.id.uname);
 		txt_fname = (EditText) findViewById(R.id.fname);
 		gender = (RadioGroup) findViewById(R.id.gender);
+		male = (RadioButton)findViewById(R.id.male);
+		female = (RadioButton)findViewById(R.id.female);
 		txt_address = (EditText) findViewById(R.id.address);
 		txt_phone = (EditText) findViewById(R.id.phone);
 		txt_password = (EditText) findViewById(R.id.password);
@@ -70,7 +72,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		updateProfile = (Button) findViewById(R.id.btnUpdateProfile);
 		save = (Button) findViewById(R.id.btnSave);
 		update = (Button) findViewById(R.id.btnUpdate);
-		logout = (Button) findViewById(R.id.logout);
+		logout = (Button) findViewById(R.id.btnLogout);
 		status = (TextView) findViewById(R.id.register_status);
 
 		Intent intent = getIntent();
@@ -117,7 +119,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		case R.id.btnUpdate:// save changes
 			new AttemptUpdateProfile().execute();
 			break;
-		case R.id.logout:// log out
+		case R.id.btnLogout:// log out
 			logout();
 			break;
 		default:
@@ -171,7 +173,12 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 						System.out.println(fullName);
 						int genderId = sex.equals("Male") ? 0 : 1;
 						System.out.println(sex);
-						gender.check(genderId);
+						if(genderId==0){
+							male.setChecked(true);
+						}else{
+							female.setChecked(true);
+						}
+						
 						txt_address.setText(address);
 						System.out.println(address);
 						txt_phone.setText(phone);
@@ -228,6 +235,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 										.show();
 								txt_password.setEnabled(false);
 								txt_password1.setEnabled(false);
+								save.setEnabled(false);
 							}
 						});
 						
@@ -291,6 +299,13 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 						public void run() {
 							Toast.makeText(getBaseContext(), "Profile Updated",
 									Toast.LENGTH_SHORT).show();
+							txt_fname.setEnabled(false);
+							txt_address.setEnabled(false);
+							txt_phone.setEnabled(false);
+							txt_email.setEnabled(false);
+							txt_bus_hault.setEnabled(false);
+							txt_fname.setFocusable(false);
+							update.setEnabled(false);
 						}
 					});
 

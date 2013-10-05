@@ -31,8 +31,9 @@ public class UserActivity extends TabActivity {
 
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
-		String name = bundle.getString("uname");
-		System.out.println(name);
+		String uname = bundle.getString("uname");
+		String name = bundle.getString("name");
+		String mail = bundle.getString("email");
 		
 
 		TabHost tabHost = getTabHost();
@@ -42,7 +43,9 @@ public class UserActivity extends TabActivity {
 		profilespec.setIndicator("",
 				getResources().getDrawable(R.drawable.icon_profile_tab));
 		Intent profileIntent = new Intent(this, MyProfileActivity.class);
-		profileIntent.putExtra("uname",name);
+		profileIntent.putExtra("uname",uname);
+		profileIntent.putExtra("name",name);
+		profileIntent.putExtra("email",mail);
 		profilespec.setContent(profileIntent);
 
 		// Tab for notification
@@ -50,6 +53,9 @@ public class UserActivity extends TabActivity {
 		notificationspec.setIndicator("", getResources()
 				.getDrawable(R.drawable.icon_notification_tab));
 		Intent notificationIntent = new Intent(this, NotificationActivity.class);
+		notificationIntent.putExtra("uname",uname);
+		notificationIntent.putExtra("name",name);
+		notificationIntent.putExtra("email",mail);
 		notificationspec.setContent(notificationIntent);
 
 		// Tab for route
@@ -57,6 +63,9 @@ public class UserActivity extends TabActivity {
 		routespec.setIndicator("",
 				getResources().getDrawable(R.drawable.icon_route_tab));
 		Intent routeIntent = new Intent(this, RouteActivity.class);
+		routeIntent.putExtra("uname",uname);
+		routeIntent.putExtra("name",name);
+		routeIntent.putExtra("email",mail);
 		routespec.setContent(routeIntent);
 
 		// Adding all TabSpec to TabHost

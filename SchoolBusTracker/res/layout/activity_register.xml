@@ -3,6 +3,7 @@
     tools:context=".RegisterActivity" >
 
     <ScrollView
+        android:id="@+id/register_scroll"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true" >
@@ -19,7 +20,7 @@
                 android:paddingTop="5dip" >
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
                     android:src="@drawable/sbt_icon" />
@@ -204,7 +205,7 @@
                     android:gravity="center"
                     android:text="@string/result"
                     android:textColor="#025f7c"
-                    android:textSize="20dip" />
+                    android:textSize="20sp" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

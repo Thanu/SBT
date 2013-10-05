@@ -43,18 +43,18 @@ public class LoginActivityFunctionalTest extends ActivityInstrumentationTestCase
 	        .waitForActivityWithTimeout(2000);
 	    assertNotNull(startedActivity);
 
-	    // Search for the tab
-	    TabHost tabHost = (TabHost) startedActivity.findViewById(com.thanu.schoolbustracker.R.id.tabhost);
-	    // Check that the T is on the screen
-	    ViewAsserts.assertOnScreen(startedActivity.getWindow().getDecorView(),
-	        textView1);
-	    // Validate the text on the TextView
-	    assertEquals("Text incorrect", "User Name", textView1.getText().toString());
-	    
-	    
-	    // Press back and click again
-	    this.sendKeys(KeyEvent.KEYCODE_BACK);
-	    TouchUtils.clickView(this, view);
+//	    // Search for the tab
+//	    TabHost tabHost = (TabHost) startedActivity.findViewById(com.thanu.schoolbustracker.R.id.tabhost);
+//	    // Check that the T is on the screen
+//	    ViewAsserts.assertOnScreen(startedActivity.getWindow().getDecorView(),
+//	        textView1);
+//	    // Validate the text on the TextView
+//	    assertEquals("Text incorrect", "User Name", textView1.getText().toString());
+//	    
+//	    
+//	    // Press back and click again
+//	    this.sendKeys(KeyEvent.KEYCODE_BACK);
+//	    TouchUtils.clickView(this, view);
 
 	  }
 

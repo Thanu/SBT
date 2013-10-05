@@ -1,5 +1,8 @@
 package com.thanu.schoolbustracker;
 
+import static com.thanu.schoolbustracker.CommonUtilities.SENDER_ID;
+import static com.thanu.schoolbustracker.CommonUtilities.SERVER_URL;
+
 import java.util.ArrayList;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -7,6 +10,10 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+
+import com.thanu.schoolbustracker.AlertDialogManager;
+import com.thanu.schoolbustracker.ConnectionDetector;
+import com.thanu.schoolbustracker.RegisterActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,7 +31,7 @@ import android.widget.TextView;
 public class RegisterActivity extends Activity implements OnClickListener {
 
 	private String username, pword, pword1, mail, busHault;
-	private String firstname, sex, place, phoneNo;
+	private String fullname, sex, place, phoneNo;
 
 	EditText uname, password, password1, email, bus_hault, fname, address,
 			phone;
@@ -38,11 +45,39 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	ArrayList<NameValuePair> nameValuePairs;
 	HttpResponse httpResponse;
 	HttpEntity entity;
+	
+	// alert dialog manager
+			AlertDialogManager alert = new AlertDialogManager();
+			
+			// Internet detector
+			ConnectionDetector cd;
+			
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
+		cd = new ConnectionDetector(getApplicationContext());
+
+		// Check if Internet present
+		if (!cd.isConnectingToInternet()) {
+			// Internet Connection is not present
+			alert.showAlertDialog(RegisterActivity.this,
+					"Internet Connection Error",
+					"Please connect to working Internet connection", false);
+			// stop executing code by return
+			return;
+		}
+
+		// Check if GCM configuration is set
+		if (SERVER_URL == null || SENDER_ID == null || SERVER_URL.length() == 0
+				|| SENDER_ID.length() == 0) {
+			// GCM sernder id / server url is missing
+			alert.showAlertDialog(RegisterActivity.this, "Configuration Error!",
+					"Please set your Server URL and GCM Sender ID", false);
+			// stop executing code by return
+			 return;
+		}
 		initialise();
 		register.setOnClickListener(this);
 	}
@@ -71,7 +106,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		protected String doInBackground(String... args) {
 			
 			username = uname.getText().toString();
-			firstname = fname.getText().toString();
+			fullname = fname.getText().toString();
 			button = (RadioButton) findViewById(gender
 					.getCheckedRadioButtonId());
 			sex = button.getText().toString();
@@ -93,7 +128,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 					nameValuePairs.add(new BasicNameValuePair("username",
 							username));
 					nameValuePairs.add(new BasicNameValuePair("fullname",
-							firstname));
+							fullname));
 					nameValuePairs.add(new BasicNameValuePair("gender", sex));
 					nameValuePairs
 							.add(new BasicNameValuePair("address", place));
@@ -110,10 +145,25 @@ public class RegisterActivity extends Activity implements OnClickListener {
 					// validate registration
 					if (success.equalsIgnoreCase("true")) {
 						Log.d("Register!", "Register Success");
-						Intent i = new Intent(getApplicationContext(),
-								UserActivity.class);
-						i.putExtra("uname", username);
-						startActivity(i);
+						if(fullname.trim().length() > 0 && mail.trim().length() > 0){
+							// Launch User Activity
+							Intent i = new Intent(getApplicationContext(), UserActivity.class);							
+							// Registering user on our server					
+							// Sending registraiton details to UserActivity
+							i.putExtra("uname", username);
+							i.putExtra("name", fullname);
+							i.putExtra("email", mail);
+							startActivity(i);
+							finish();
+						}else{
+							// user doen't filled that data
+							// ask him to fill the form
+							alert.showAlertDialog(RegisterActivity.this, "Registration Error!", "Please enter your details", false);
+						}
+//						Intent i = new Intent(getApplicationContext(),
+//								UserActivity.class);
+//						i.putExtra("uname", username);
+//						startActivity(i);
 						
 					} else {
 						runOnUiThread(new Runnable() {

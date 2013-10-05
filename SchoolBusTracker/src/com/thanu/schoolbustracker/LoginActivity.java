@@ -8,6 +8,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -22,7 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 //Activity for login action
 public class LoginActivity extends Activity implements OnClickListener {
-	private String username, password;
+	private String username, password,mail,fullname;
 	EditText uname, pword;
 	TextView status;
 	Button login;
@@ -84,9 +85,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 						i.putExtra("uname", username);
 						startActivity(i);//starting the admin account
 					} else {
-						Intent i = new Intent(getApplicationContext(),
-								UserActivity.class);
+						
+						Intent i = new Intent(getApplicationContext(), UserActivity.class);	
 						i.putExtra("uname", username);
+						retrieveUser();
+						i.putExtra("name", fullname);
+						i.putExtra("email", mail);
 						startActivity(i);//starting the user account
 					}
 
@@ -114,6 +118,38 @@ public class LoginActivity extends Activity implements OnClickListener {
 			}
 			return null;
 		}
+	}
+	public void retrieveUser(){
+
+		
+			String url = "http://10.0.2.2:8080/SBT/getUser.php";
+			JSONParser parser = new JSONParser();
+
+			try {
+				nameValuePairs = new ArrayList<NameValuePair>();
+
+				nameValuePairs.add(new BasicNameValuePair("username", username));
+
+				JSONObject jsonResponse = new JSONObject(
+						parser.makeHttpRequest(url, nameValuePairs));
+								
+				mail = jsonResponse.getString("email");
+				fullname = jsonResponse.getString("full_name");
+				
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+				Log.d("Error!", "JSONException");
+				Log.d("Error!", e.toString());
+				// Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.d("Error!", "Connection error");
+				Log.d("Error!", e.toString());
+				// Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
+			}
+			
+		
 	}
 
 }

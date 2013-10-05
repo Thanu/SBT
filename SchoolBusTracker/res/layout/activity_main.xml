@@ -21,7 +21,7 @@
                 android:paddingTop="5dip" >
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
                     android:src="@drawable/sbt_icon" />
@@ -33,33 +33,31 @@
                 android:layout_below="@id/header"
                 android:orientation="vertical"
                 android:padding="10dip" >
-                
-				<TextView
-				    android:id="@+id/info"
-				    android:layout_width="fill_parent"
-				    android:layout_height="wrap_content"
-				    android:layout_marginBottom="40dip"
-				    android:layout_marginTop="40dip"
-				    android:gravity="center"
-				    android:text="@string/welcome"
-				    android:textColor="#025f7c"
-				    android:textSize="20dip" />
-                 
+
+                <TextView
+                    android:id="@+id/info"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dip"
+                    android:layout_marginTop="40dip"
+                    android:gravity="center"
+                    android:text="@string/welcome"
+                    android:textColor="#025f7c"
+                    android:textSize="20sp" />
+
                 <Button
                     android:id="@+id/btnSignIn"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
                     android:text="@string/SignIn" />
-                
+
                 <Button
                     android:id="@+id/btnSignUp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
                     android:text="@string/SignUp" />
-
-                
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

@@ -34,15 +34,17 @@ public class MainActivityUnitTest extends
 				view1.getText());
 
 		// test the sign up button layout
-		buttonId1 = com.thanu.schoolbustracker.R.id.btnSignIn;
-		assertNotNull(activity.findViewById(buttonId1));
-		Button view2 = (Button) activity.findViewById(buttonId1);
-		assertEquals("Incorrect label of the button", "Sign In",
+		buttonId2 = com.thanu.schoolbustracker.R.id.btnSignUp;
+		assertNotNull(activity.findViewById(buttonId2));
+		Button view2 = (Button) activity.findViewById(buttonId2);
+		assertEquals("Incorrect label of the button", "Sign Up",
 				view2.getText());
 	}
 
 	@SmallTest
 	public void testIntentTriggerViaOnClick() {
+		
+		// -----------------for sign in --------------------------
 		// check sign in button view
 		buttonId1 = com.thanu.schoolbustracker.R.id.btnSignIn;
 		Button view1 = (Button) activity.findViewById(buttonId1);
@@ -54,14 +56,17 @@ public class MainActivityUnitTest extends
 		// Check the intent which was started
 		Intent triggeredIntent1 = getStartedActivityIntent();
 		assertNotNull("Intent was null", triggeredIntent1);
+		
+		
 
+		// -----------------for sign up --------------------------
 		// check sign up button view
-		buttonId2 = com.thanu.schoolbustracker.R.id.btnSignIn;
+		buttonId2 = com.thanu.schoolbustracker.R.id.btnSignUp;
 		Button view2 = (Button) activity.findViewById(buttonId2);
 		assertNotNull("Button not allowed to be null", view2);
 
-		// call the sign in method directly via view2
-		getActivity().onClick(view1);
+		// call the sign up method directly via view2
+		getActivity().onClick(view2);
 
 		// Check the intent which was started
 		Intent triggeredIntent2 = getStartedActivityIntent();
