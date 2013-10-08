@@ -15,6 +15,9 @@ public class AdminActivity extends TabActivity {
 		setContentView(R.layout.activity_admin);
 
 		TabHost tabHost = getTabHost();
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+		String uname = bundle.getString("uname");
 		
 		
 		// Tab for Admin functions		
@@ -23,6 +26,7 @@ public class AdminActivity extends TabActivity {
 		profilespec.setIndicator("Admin",
 				getResources().getDrawable(R.drawable.icon_profile_tab));
 		Intent profileIntent = new Intent(this, AdminProfileActivity.class);
+		profileIntent.putExtra("uname",uname);
 		profilespec.setContent(profileIntent);
 
 		
@@ -32,6 +36,7 @@ public class AdminActivity extends TabActivity {
 		routespec.setIndicator("Route",
 				getResources().getDrawable(R.drawable.icon_route_tab));
 		Intent routeIntent = new Intent(this, RouteActivity.class);
+		profileIntent.putExtra("uname",uname);
 		routespec.setContent(routeIntent);
 
 		// Adding all TabSpec to TabHost

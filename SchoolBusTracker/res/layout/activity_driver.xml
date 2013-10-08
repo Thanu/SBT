@@ -1,0 +1,65 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".DriverActivity" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="462dp" >
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="38dp"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip" >
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:src="@drawable/sbt_icon" />
+        </LinearLayout>
+
+         <Button
+             android:id="@+id/notifyEmergency"
+             android:layout_width="185dp"
+             android:layout_height="wrap_content"
+             android:layout_alignLeft="@+id/busStarted"
+             android:layout_below="@+id/busStarted"
+             android:layout_marginTop="32dp"
+             android:text="@string/notifyEmergency" />
+
+         <Button
+             android:id="@+id/driver_logout"
+             android:layout_width="185dp"
+             android:layout_height="wrap_content"
+             android:layout_alignLeft="@+id/notifyEmergency"
+             android:layout_alignParentBottom="true"
+             android:layout_marginBottom="24dp"
+             android:text="@string/logout" />
+
+         <TextView
+             android:id="@+id/textView1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentTop="true"
+             android:layout_centerHorizontal="true"
+             android:gravity="center"
+             android:text="@string/title_activity_admin"
+             android:textColor="#025f7c"
+             android:textSize="20sp" />
+
+         <Button
+             android:id="@+id/busStarted"
+             android:layout_width="185dp"
+             android:layout_height="wrap_content"
+             android:layout_alignLeft="@+id/textView1"
+             android:layout_below="@+id/header"
+             android:layout_marginTop="58dp"
+             android:text="@string/busStarted" />
+
+    </RelativeLayout>
+
+</merge>

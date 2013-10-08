@@ -27,6 +27,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 //Activity for registration action
 public class RegisterActivity extends Activity implements OnClickListener {
 
@@ -45,13 +47,12 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	ArrayList<NameValuePair> nameValuePairs;
 	HttpResponse httpResponse;
 	HttpEntity entity;
-	
+
 	// alert dialog manager
-			AlertDialogManager alert = new AlertDialogManager();
-			
-			// Internet detector
-			ConnectionDetector cd;
-			
+	AlertDialogManager alert = new AlertDialogManager();
+
+	// Internet detector
+	ConnectionDetector cd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +74,17 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		if (SERVER_URL == null || SENDER_ID == null || SERVER_URL.length() == 0
 				|| SENDER_ID.length() == 0) {
 			// GCM sernder id / server url is missing
-			alert.showAlertDialog(RegisterActivity.this, "Configuration Error!",
+			alert.showAlertDialog(RegisterActivity.this,
+					"Configuration Error!",
 					"Please set your Server URL and GCM Sender ID", false);
 			// stop executing code by return
-			 return;
+			return;
 		}
 		initialise();
 		register.setOnClickListener(this);
 	}
 
-	private void initialise() {//getting elements of activity_register
+	private void initialise() {// getting elements of activity_register
 		uname = (EditText) findViewById(R.id.uname);
 		fname = (EditText) findViewById(R.id.fname);
 		gender = (RadioGroup) findViewById(R.id.gender);
@@ -104,7 +106,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 
 		@Override
 		protected String doInBackground(String... args) {
-			
+
 			username = uname.getText().toString();
 			fullname = fname.getText().toString();
 			button = (RadioButton) findViewById(gender
@@ -118,9 +120,12 @@ public class RegisterActivity extends Activity implements OnClickListener {
 			busHault = bus_hault.getText().toString();
 
 			try {
-				if (pword.equals(pword1)) {//if the password and re-entered password are equal
-					
-					String url = "http://10.0.2.2:8080/SBT/signup.php";//url of the signup.php
+				if (pword.equals(pword1)) {// if the password and re-entered
+											// password are equal
+
+					String url = "http://10.0.2.2:8080/SBT/signup.php";// url of
+																		// the
+																		// signup.php
 					JSONParser parser = new JSONParser();
 
 					nameValuePairs = new ArrayList<NameValuePair>();
@@ -140,31 +145,36 @@ public class RegisterActivity extends Activity implements OnClickListener {
 							busHault));
 
 					String success = parser
-							.makeHttpRequest(url, nameValuePairs).trim();//getting the response from httpPOST request
+							.makeHttpRequest(url, nameValuePairs).trim();// getting
+																			// the
+																			// response
+																			// from
+																			// httpPOST
+																			// request
 
 					// validate registration
 					if (success.equalsIgnoreCase("true")) {
 						Log.d("Register!", "Register Success");
-						if(fullname.trim().length() > 0 && mail.trim().length() > 0){
+						if (fullname.trim().length() > 0
+								&& mail.trim().length() > 0) {
 							// Launch User Activity
-							Intent i = new Intent(getApplicationContext(), UserActivity.class);							
-							// Registering user on our server					
+							Intent i = new Intent(getApplicationContext(),
+									UserActivity.class);
+							// Registering user on our server
 							// Sending registraiton details to UserActivity
 							i.putExtra("uname", username);
 							i.putExtra("name", fullname);
 							i.putExtra("email", mail);
 							startActivity(i);
 							finish();
-						}else{
+						} else {
 							// user doen't filled that data
 							// ask him to fill the form
-							alert.showAlertDialog(RegisterActivity.this, "Registration Error!", "Please enter your details", false);
+							alert.showAlertDialog(RegisterActivity.this,
+									"Registration Error!",
+									"Please enter your details", false);
 						}
-//						Intent i = new Intent(getApplicationContext(),
-//								UserActivity.class);
-//						i.putExtra("uname", username);
-//						startActivity(i);
-						
+
 					} else {
 						runOnUiThread(new Runnable() {
 							@Override
@@ -183,13 +193,19 @@ public class RegisterActivity extends Activity implements OnClickListener {
 							}
 						});
 					}
-					
+
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.d("Error!", "Connection error");
-				Log.d("Error!", e.getMessage());
-				// Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
+
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getBaseContext(), "Connection Error",
+								Toast.LENGTH_SHORT).show();
+					}
+				});
 			}
 			return null;
 		}

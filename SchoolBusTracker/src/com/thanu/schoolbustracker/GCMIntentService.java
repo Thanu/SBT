@@ -28,7 +28,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         Log.i(TAG, "Device registered: regId = " + registrationId);
         displayMessage(context, "Your device registred with GCM");
         Log.d("NAME", NotificationActivity.name);
-        ServerUtilities.register(context, NotificationActivity.name, NotificationActivity.email, registrationId);
+        ServerUtilities.register(context,NotificationActivity.uname, NotificationActivity.name, NotificationActivity.email, registrationId);
     }
 
     /**
@@ -105,7 +105,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         
         String title = context.getString(R.string.app_name);
          
-        Intent notificationIntent = new Intent(context, MainActivity.class);
+        Intent notificationIntent = new Intent(context, NotificationActivity.class);
         // set intent so it does not start a new activity
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_SINGLE_TOP);

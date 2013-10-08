@@ -33,7 +33,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btnSignIn:// starting login activity
-			Intent i1 = new Intent(getApplicationContext(), LoginActivity.class);
+			Intent i1 = new Intent(getApplicationContext(),LoginActivity.class);
 			startActivity(i1);
 			break;
 		case R.id.btnSignUp:// starting register activity

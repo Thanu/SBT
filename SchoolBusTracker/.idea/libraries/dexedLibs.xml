@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="dexedLibs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bin/dexedLibs/google-play-services-1b351f6f9b90b1e2e84672fe34d74b2f.jar!/" />
+      <root url="jar://$PROJECT_DIR$/bin/dexedLibs/gcm-379c0bc11d0c9a9b67408e9456b3720d.jar!/" />
+      <root url="jar://$PROJECT_DIR$/bin/dexedLibs/maps-6f9b1604bfcdae5fad514266a7c428e5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/bin/dexedLibs/android-support-v4-0d853432851b62bc1b10dd24189523ad.jar!/" />
+      <root url="jar://$PROJECT_DIR$/bin/dexedLibs/google-play-services_lib-a4162e8c065dea9451e2df20c2165442.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,7 +1,7 @@
 package com.thanu.schoolbustracker;
 
 import java.util.ArrayList;
-
+import android.app.TabActivity;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 public class AdminProfileActivity extends Activity implements OnClickListener {
@@ -39,6 +40,10 @@ public class AdminProfileActivity extends Activity implements OnClickListener {
 		logout = (Button)findViewById(R.id.btnAdmin_logout);
 		username = (EditText)findViewById(R.id.drop_uder_id);
 		
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+		uname = bundle.getString("uname");
+		
 		modifyRoute.setOnClickListener(this);
 		addAnnouncement.setOnClickListener(this);
 		dropUser.setOnClickListener(this);
@@ -49,6 +54,10 @@ public class AdminProfileActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btnModifyRoute:// updating bus route
+			Intent intent = getIntent();
+			Bundle bundle = intent.getExtras();
+			uname = bundle.getString("uname");
+			(( TabActivity ) getParent()).getTabHost().setCurrentTab(2);
 			break;
 		case R.id.btnAnnouncement:// add announcements
 			break;
@@ -76,7 +85,7 @@ public class AdminProfileActivity extends Activity implements OnClickListener {
 		@Override
 		protected String doInBackground(String... args) {
 			String url = "http://10.0.2.2:8080/SBT/dropUser.php";
-
+			nameValuePairs = new ArrayList<NameValuePair>();
 			uname = username.getText().toString();
 			System.out.println(uname);
 			try {
@@ -88,9 +97,11 @@ public class AdminProfileActivity extends Activity implements OnClickListener {
 							.add(new BasicNameValuePair("username", uname));
 					String success = parser.makeHttpRequest(url, nameValuePairs).trim();
 					System.out.println(success);
+					
 					// validate user drop
 					if (success.equalsIgnoreCase("true")) {
 						Log.d("Drop!", "User is deleted");
+						
 						runOnUiThread(new Runnable() {
 							@Override
 							public void run() {

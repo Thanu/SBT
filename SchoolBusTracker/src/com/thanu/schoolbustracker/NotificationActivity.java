@@ -3,7 +3,7 @@ package com.thanu.schoolbustracker;
 import static com.thanu.schoolbustracker.CommonUtilities.DISPLAY_MESSAGE_ACTION;
 import static com.thanu.schoolbustracker.CommonUtilities.EXTRA_MESSAGE;
 import static com.thanu.schoolbustracker.CommonUtilities.SENDER_ID;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
  
-public class NotificationActivity extends ListActivity {
+public class NotificationActivity extends Activity {
 
      
 	// label to display gcm messages
@@ -31,13 +31,14 @@ public class NotificationActivity extends ListActivity {
 	// Connection detector
 	ConnectionDetector cd;
 	
+	public static String uname;
 	public static String name;
 	public static String email;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notification_list);
+        setContentView(R.layout.activity_notification);
 
         cd = new ConnectionDetector(getApplicationContext());
 
@@ -53,7 +54,7 @@ public class NotificationActivity extends ListActivity {
 		
 		// Getting name, email from intent
 		Intent i = getIntent();
-		
+		uname = i.getStringExtra("uname");
 		name = i.getStringExtra("name");
 		email = i.getStringExtra("email");		
 		
@@ -89,7 +90,7 @@ public class NotificationActivity extends ListActivity {
 					protected Void doInBackground(Void... params) {
 						// Register on our server
 						// On server creates a new user
-						ServerUtilities.register(context, name, email, regId);
+						ServerUtilities.register(context,uname, name, email, regId);
 						return null;
 					}
 

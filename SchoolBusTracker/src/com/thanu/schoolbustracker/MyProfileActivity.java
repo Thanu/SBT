@@ -260,9 +260,14 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.d("Error!", "Connection error");
-				Log.d("Error!", e.getMessage());
-				// Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
-			}
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						 Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
+					}
+				});
+				}
 			return null;
 		}
 	}
@@ -332,9 +337,14 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.d("Error!", "Connection error");
-				Log.d("Error!", e.getMessage());
-				// Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
-			}
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						 Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
+					}
+				});
+}
 			return null;
 		}
 	}
