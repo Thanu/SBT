@@ -73,7 +73,7 @@ public class LoginActivityUnitTest extends
 		view4.setText("100553");
 		text2 = com.thanu.schoolbustracker.R.id.pword;
 		EditText view5 = (EditText) activity.findViewById(text2);		
-		view5.setText("thanuja");
+		view5.setText("thanu");
 
 		// call the login method directly via view1
 		getActivity().onClick(view1);
