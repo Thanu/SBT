@@ -9,8 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-
 import com.google.android.gcm.GCMBaseIntentService;
+
  
 public class GCMIntentService extends GCMBaseIntentService {
  
@@ -91,7 +91,7 @@ public class GCMIntentService extends GCMBaseIntentService {
      * Issues a notification to inform the user that server has sent a message.
      */
     private static void generateNotification(Context context, String message) {
-        int icon = R.drawable.ic_launcher;
+    	int icon = R.drawable.ic_launcher;
         long when = System.currentTimeMillis();
        
         NotificationManager notificationManager = (NotificationManager)
@@ -119,8 +119,8 @@ public class GCMIntentService extends GCMBaseIntentService {
          
         // Vibrate if vibrate is enabled
         notification.defaults |= Notification.DEFAULT_VIBRATE;
-        notificationManager.notify(0, notification);      
- 
+        notificationManager.notify(0, notification); 
+        
     }
  
 }

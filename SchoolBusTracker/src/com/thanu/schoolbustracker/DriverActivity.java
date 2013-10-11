@@ -74,7 +74,7 @@ public class DriverActivity extends Activity implements OnClickListener{
 
 		@Override
 		protected String doInBackground(String... args) {
-			String url = "http://10.0.2.2:8080/SBT/dropUser.php";
+			String url = "http://192.168.42.11:8080/SBT/dropUser.php";
 			nameValuePairs = new ArrayList<NameValuePair>();
 			uname = username.getText().toString();
 			System.out.println(uname);

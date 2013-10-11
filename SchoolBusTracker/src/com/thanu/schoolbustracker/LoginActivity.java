@@ -1,5 +1,8 @@
 package com.thanu.schoolbustracker;
 
+import static com.thanu.schoolbustracker.CommonUtilities.SENDER_ID;
+import static com.thanu.schoolbustracker.CommonUtilities.SERVER_URL;
+
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -35,10 +38,42 @@ public class LoginActivity extends Activity implements OnClickListener {
 	HttpResponse httpResponse;
 	HttpEntity entity;
 
+	// alert dialog manager
+	AlertDialogManager alert = new AlertDialogManager();
+
+	// Internet detector
+	ConnectionDetector cd;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+
+		cd = new ConnectionDetector(getApplicationContext());
+
+		// Check if Internet present
+		if (!cd.isConnectingToInternet()) {
+			// Internet Connection is not present
+			alert.showAlertDialog(LoginActivity.this,
+					"Internet Connection Error",
+					"Please connect to working Internet connection", false);
+			// stop executing code by return
+			return;
+		}
+		// Check if GCM configuration is set
+		if (SERVER_URL == null || SENDER_ID == null
+				|| SERVER_URL.length() == 0
+				|| SENDER_ID.length() == 0) {
+			// GCM sernder id / server url is missing
+			alert.showAlertDialog(
+					LoginActivity.this,
+					"Configuration Error!",
+					"Please set your Server URL and GCM Sender ID",
+					false);
+			// stop executing code by return
+			return;
+		}
+
 		initialise();
 		login.setOnClickListener(this);
 	}
@@ -60,9 +95,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		@Override
 		protected String doInBackground(String... args) {
 
-			String url = "http://10.0.2.2:8080/SBT/signin.php";// url of php
-																// file needed
-																// for login
+			String url = "http://10.0.2.2:8080/SBT/signin.php";// url of php file needed for login
 			username = uname.getText().toString();
 			password = pword.getText().toString();
 
@@ -95,13 +128,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 								AdminActivity.class);
 						i.putExtra("uname", username);
 						startActivity(i);// starting the admin account
-					} else if (username.equals("Driver")) {// if the user is
-															// driver
+					} else if (username.equals("Driver")) {// if the user is driver
 						Intent i = new Intent(getApplicationContext(),
 								DriverActivity.class);
 						i.putExtra("uname", username);
 						startActivity(i);// starting the driver account
-					} else {
+					} else {				
 
 						Intent i = new Intent(getApplicationContext(),
 								UserActivity.class);
@@ -117,9 +149,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							status.setText("Your usernsme or passsword is incorrect");// give
-																						// error
-																						// msg
+							status.setText("Your usernsme or passsword is incorrect");// give error msg
 							// empty the username, password text box
 							uname.setText("");
 							pword.setText("");
@@ -170,11 +200,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getBaseContext(), "Connection Error",
+							Toast.LENGTH_SHORT).show();
 
 				}
 			});
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.d("Error!", "Connection error");
@@ -182,10 +213,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getBaseContext(), "Connection Error",
+							Toast.LENGTH_SHORT).show();
 				}
 			});
-			
+
 		}
 
 	}

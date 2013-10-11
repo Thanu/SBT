@@ -2,36 +2,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".AdminProfileActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:text="@string/title_activity_admin"
-        android:textColor="#025f7c"
-        android:textSize="20sp" />
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="462dp" >
 
-        <Button
-            android:id="@+id/btnModifyRoute"
-            android:layout_width="185dp"
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btnDropUser"
-            android:layout_alignLeft="@+id/btnDropUser"
-            android:layout_marginBottom="20dp"
-            android:text="@string/modify" />
+            android:layout_above="@+id/btnAnnouncement"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="14dp"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip" >
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:src="@drawable/sbt_icon" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnAnnouncement"
             android:layout_width="185dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btnModifyRoute"
-            android:layout_alignLeft="@+id/btnModifyRoute"
-            android:layout_marginBottom="22dp"
+            android:layout_above="@+id/btnDropUser"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="28dp"
+            android:layout_toLeftOf="@+id/drop_uder_id"
             android:text="@string/announcement" />
 
         <Button
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/btnAdmin_logout"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="28dp"
             android:text="@string/drop_user" />
 
         <Button
@@ -64,22 +64,17 @@
             android:inputType="text"
             android:singleLine="true" />
 
-        <LinearLayout
-            android:id="@+id/header"
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btnAnnouncement"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="14dp"
-            android:paddingBottom="5dip"
-            android:paddingTop="5dip" >
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="@string/title_activity_admin"
+            android:textColor="#025f7c"
+            android:textSize="20sp" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:src="@drawable/sbt_icon" />
-        </LinearLayout>
     </RelativeLayout>
 
 </merge>

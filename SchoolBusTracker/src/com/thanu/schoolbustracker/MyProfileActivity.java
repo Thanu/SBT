@@ -78,7 +78,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		name = bundle.getString("uname");
-		System.out.println(name);
+		//System.out.println(name);
 
 		new AttemptToRetrieveUser().execute();
 

@@ -9,16 +9,21 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -26,7 +31,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 public class RouteActivity extends Activity implements OnMapClickListener,
-		OnMapLongClickListener, OnMarkerClickListener {
+		OnMapLongClickListener, OnMarkerClickListener, OnClickListener {
 
 	final int RQS_GooglePlayServices = 1;
 	private GoogleMap myMap;
@@ -35,7 +40,7 @@ public class RouteActivity extends Activity implements OnMapClickListener,
 	boolean markerClicked;
 	PolylineOptions rectOptions;
 	Polyline polyline;
-
+	Button modifyRoute, save;
 	String name;
 
 	@Override
@@ -43,24 +48,50 @@ public class RouteActivity extends Activity implements OnMapClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_route);
 
-		FragmentManager myFragmentManager = getFragmentManager();
-		MapFragment myMapFragment = (MapFragment) myFragmentManager
-				.findFragmentById(R.id.map);
-		myMap = myMapFragment.getMap();
-
-		myMap.setMyLocationEnabled(true);
-
-		myMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-		myMap.setOnMapClickListener(this);
-		myMap.setOnMapLongClickListener(this);
-		myMap.setOnMarkerClickListener(this);
-
-		markerClicked = false;
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		name = bundle.getString("uname");
-		System.out.println(name);
+
+		FragmentManager myFragmentManager = getFragmentManager();
+		MapFragment myMapFragment = (MapFragment) myFragmentManager
+				.findFragmentById(R.id.map);
+		modifyRoute = (Button) findViewById(R.id.btnModifyRoute);
+		save = (Button) findViewById(R.id.save);
+		myMap = myMapFragment.getMap();
+
+		if (myMap != null) {
+			myMap.setMyLocationEnabled(true);
+
+			myMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+			myMap.getUiSettings().setCompassEnabled(false);
+			myMap.getUiSettings().setRotateGesturesEnabled(true);
+			myMap.getUiSettings().setScrollGesturesEnabled(true);
+			myMap.getUiSettings().setZoomControlsEnabled(true);
+			myMap.getUiSettings().setZoomGesturesEnabled(true);
+			LatLng location = new LatLng(6.796923, 79.922433);
+			CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(
+					6.796923, 79.922433));
+			myMap.moveCamera(center);
+			CameraPosition cameraPosition = new CameraPosition.Builder()
+					.target(location)      // Sets the center of the map to Mountain View
+				    .zoom(10) // Sets the zoom
+					.bearing((float) 112.5) // Sets the orientation of the camera to east
+					.tilt(30) // Sets the tilt of the camera to 30 degrees
+					.build(); // Creates a CameraPosition from the builder
+			myMap.animateCamera(CameraUpdateFactory
+					.newCameraPosition(cameraPosition));
+
+			modifyRoute.setOnClickListener(this);
+			myMap.setOnMapClickListener(this);
+			myMap.setOnMapLongClickListener(this);
+			myMap.setOnMarkerClickListener(this);
+		}
+
+		markerClicked = false;
+
+		if (name.equalsIgnoreCase("Admin")) {
+			modifyRoute.setEnabled(true);
+		}
 	}
 
 	@Override
@@ -114,7 +145,7 @@ public class RouteActivity extends Activity implements OnMapClickListener,
 
 	@Override
 	public void onMapLongClick(LatLng point) {
-		if (name.equalsIgnoreCase("Admin")) {
+		if (name == null || name.equalsIgnoreCase("Admin")) {
 			myMap.addMarker(new MarkerOptions().position(point).title(
 					point.toString()));
 
@@ -124,7 +155,7 @@ public class RouteActivity extends Activity implements OnMapClickListener,
 
 	@Override
 	public boolean onMarkerClick(Marker marker) {
-		if (name.equalsIgnoreCase("Admin")) {
+		if (name == null || name.equalsIgnoreCase("Admin")) {
 			if (markerClicked) {
 
 				if (polyline != null) {
@@ -147,6 +178,18 @@ public class RouteActivity extends Activity implements OnMapClickListener,
 		}
 		return true;
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btnModifyRoute:// it will enable save button
+			save.setEnabled(true);
+			break;
+		case R.id.save:// saving changes
+
+			break;
+		}
 	}
 
 }

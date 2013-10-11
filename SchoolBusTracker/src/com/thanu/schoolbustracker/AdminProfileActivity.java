@@ -1,13 +1,17 @@
 package com.thanu.schoolbustracker;
 
+import static com.thanu.schoolbustracker.CommonUtilities.SENDER_ID;
+
 import java.util.ArrayList;
-import android.app.TabActivity;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+
+import com.google.android.gcm.GCMRegistrar;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -17,12 +21,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TabHost;
 import android.widget.Toast;
 
 public class AdminProfileActivity extends Activity implements OnClickListener {
 		EditText username;
-		Button modifyRoute,addAnnouncement,dropUser,logout;
+		Button addAnnouncement,dropUser,logout;
 		String uname;
 		
 		HttpClient httpClient;
@@ -34,7 +37,7 @@ public class AdminProfileActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_profile);
-		modifyRoute = (Button)findViewById(R.id.btnModifyRoute);		
+				
 		addAnnouncement = (Button)findViewById(R.id.btnAnnouncement);		
 		dropUser = (Button)findViewById(R.id.btnDropUser);		
 		logout = (Button)findViewById(R.id.btnAdmin_logout);
@@ -44,21 +47,22 @@ public class AdminProfileActivity extends Activity implements OnClickListener {
 		Bundle bundle = intent.getExtras();
 		uname = bundle.getString("uname");
 		
-		modifyRoute.setOnClickListener(this);
+		
 		addAnnouncement.setOnClickListener(this);
 		dropUser.setOnClickListener(this);
 		logout.setOnClickListener(this);
 	}
 	
+	public void switchTabInActivity(int indexTabToSwitchTo){
+        AdminActivity parentActivity;
+        parentActivity = (AdminActivity) this.getParent();
+        parentActivity.switchTab(indexTabToSwitchTo);
+	}
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btnModifyRoute:// updating bus route
-			Intent intent = getIntent();
-			Bundle bundle = intent.getExtras();
-			uname = bundle.getString("uname");
-			(( TabActivity ) getParent()).getTabHost().setCurrentTab(2);
-			break;
+		
 		case R.id.btnAnnouncement:// add announcements
 			break;
 		case R.id.btnDropUser:// delete a user from sbt record
@@ -84,7 +88,7 @@ public class AdminProfileActivity extends Activity implements OnClickListener {
 
 		@Override
 		protected String doInBackground(String... args) {
-			String url = "http://10.0.2.2:8080/SBT/dropUser.php";
+			String url = "http://10.0.2.2:8080/SBT/dropUser.php";//10.0.2.2:8080/SBT/dropUser.php";
 			nameValuePairs = new ArrayList<NameValuePair>();
 			uname = username.getText().toString();
 			System.out.println(uname);
@@ -101,6 +105,7 @@ public class AdminProfileActivity extends Activity implements OnClickListener {
 					// validate user drop
 					if (success.equalsIgnoreCase("true")) {
 						Log.d("Drop!", "User is deleted");
+						//GCMRegistrar.unregister(context);//.register(this, SENDER_ID);
 						
 						runOnUiThread(new Runnable() {
 							@Override

@@ -104,6 +104,10 @@
             android:name="com.thanu.schoolbustracker.AdminProfileActivity"
             android:label="@string/title_activity_admin_profile" >
         </activity>
+          <activity
+            android:name="com.thanu.schoolbustracker.DriverActivity"
+            android:label="@string/title_activity_driver" >
+        </activity>
        
 
         <receiver
@@ -122,10 +126,7 @@
 
         <service android:name="com.thanu.schoolbustracker.GCMIntentService" />
 
-        <activity
-            android:name="com.thanu.schoolbustracker.DriverActivity"
-            android:label="@string/title_activity_driver" >
-        </activity>
+      
     </application>
 
 </manifest>
