@@ -2,6 +2,7 @@ package com.thanu.schoolbustracker;
 
 import static com.thanu.schoolbustracker.CommonUtilities.SENDER_ID;
 import static com.thanu.schoolbustracker.CommonUtilities.SERVER_URL;
+import static com.thanu.schoolbustracker.CommonUtilities.SERVER_IP;
 
 import java.util.ArrayList;
 import org.apache.http.HttpEntity;
@@ -123,9 +124,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 				if (pword.equals(pword1)) {// if the password and re-entered
 											// password are equal
 
-					String url = "http://10.0.2.2:8080/SBT/signup.php";//192.168.42.11:8080/SBT/signup.php";// url of
-																		// the
-																		// signup.php
+					String url = SERVER_IP+"signup.php";// url of the signup.php
 					JSONParser parser = new JSONParser();
 
 					nameValuePairs = new ArrayList<NameValuePair>();
@@ -145,12 +144,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 							busHault));
 
 					String success = parser
-							.makeHttpRequest(url, nameValuePairs).trim();// getting
-																			// the
-																			// response
-																			// from
-																			// httpPOST
-																			// request
+							.makeHttpRequest(url, nameValuePairs).trim();// getting the response from httpPOST request
 
 					// validate registration
 					if (success.equalsIgnoreCase("true")) {

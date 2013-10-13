@@ -19,34 +19,6 @@
         android:enabled="false"
         android:layout_alignParentTop="true"
         android:text="@string/modify" />
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="50dp"
-        android:layout_toRightOf="@+id/btnModifyRoute"
-        android:enabled="false"
-        android:text="@string/save" />
+    
 
 </RelativeLayout>
-<!-- <?xml version="1.0" encoding="utf-8"?> -->
-<!-- <fragment xmlns:android="http://schemas.android.com/apk/res/android" -->
-<!-- xmlns:map="http://schemas.android.com/apk/res-auto" -->
-<!-- android:id="@+id/map" -->
-<!-- android:layout_width="match_parent" -->
-<!-- android:layout_height="match_parent" -->
-<!-- class="com.google.android.gms.maps.MapFragment"/> -->
-<!-- map:cameraBearing="112.5" -->
-<!-- map:cameraTargetLat="6.796923" -->
-<!-- map:cameraTargetLng="79.922433" -->
-<!-- map:cameraTilt="30" -->
-<!-- map:cameraZoom="10" -->
-<!-- map:mapType="normal" -->
-<!-- map:uiCompass="false" -->
-<!-- map:uiRotateGestures="true" -->
-<!-- map:uiScrollGestures="true" -->
-<!-- map:uiTiltGestures="true" -->
-<!-- map:uiZoomControls="true" -->
-<!-- map:uiZoomGestures="true" /> -->

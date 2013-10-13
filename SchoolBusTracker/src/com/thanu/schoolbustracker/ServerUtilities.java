@@ -1,5 +1,6 @@
 package com.thanu.schoolbustracker;
 import static com.thanu.schoolbustracker.CommonUtilities.SERVER_URL;
+import static com.thanu.schoolbustracker.CommonUtilities.SERVER_IP;
 import static com.thanu.schoolbustracker.CommonUtilities.TAG;
 import static com.thanu.schoolbustracker.CommonUtilities.displayMessage;
  
@@ -94,6 +95,23 @@ public final class ServerUtilities {
             String message = context.getString(R.string.server_unregister_error,
                     e.getMessage());
             CommonUtilities.displayMessage(context, message);
+        }
+    }
+    
+    static void addAnnouncement(final Context context, final String message) {
+        Log.i(TAG, "adding notification");
+        String url = SERVER_IP+"add_announcement.php";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("message", message);
+        try {
+            post(url, params);
+            String msg = "Message was sent";
+            CommonUtilities.displayMessage(context, msg);
+        } catch (IOException e) {
+            // At this point the device is unregistered from GCM, but still
+            // registered in the server.
+           String msg = "Message was not sent";
+            CommonUtilities.displayMessage(context, msg);
         }
     }
 

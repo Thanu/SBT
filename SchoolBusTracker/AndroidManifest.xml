@@ -11,9 +11,8 @@
     <permission
         android:name="com.thanu.schoolbustracker.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.thanu.schoolbustracker.permission.MAPS_RECEIVE" />
-    
-    
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <!-- External storage for caching. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -104,11 +103,10 @@
             android:name="com.thanu.schoolbustracker.AdminProfileActivity"
             android:label="@string/title_activity_admin_profile" >
         </activity>
-          <activity
+        <activity
             android:name="com.thanu.schoolbustracker.DriverActivity"
             android:label="@string/title_activity_driver" >
         </activity>
-       
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
@@ -126,7 +124,14 @@
 
         <service android:name="com.thanu.schoolbustracker.GCMIntentService" />
 
-      
+        <activity
+            android:name="com.thanu.schoolbustracker.DriverLocationActivity"
+            android:label="@string/title_activity_driver_location" >
+        </activity>
+        <activity
+            android:name="com.thanu.schoolbustracker.DriverProfileActivity"
+            android:label="@string/title_activity_driver_profile" >
+        </activity>
     </application>
 
 </manifest>

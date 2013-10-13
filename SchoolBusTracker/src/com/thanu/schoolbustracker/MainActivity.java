@@ -10,6 +10,7 @@ import android.widget.Button;
 
 public class MainActivity extends Activity implements OnClickListener {
 	Button signin, signup;
+	boolean isBackButtonPressed;
 	//for app home page
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +46,13 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
+	
+	//handle back button press
+    @Override
+    public void onBackPressed() 
+    {
+        isBackButtonPressed = true;
+        super.onBackPressed();
+    }
 
 }

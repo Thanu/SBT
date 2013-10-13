@@ -17,6 +17,7 @@
     <string name="address">Address</string>
     <string name="phone">Phone</string>
     <string name="email">Email</string>
+    <string name="updateLocation">Update Location</string>
     <string name="bus_hault">Bus Hault</string>
     <string name="register">Register</string>
     <string name="status">Already has account!</string>
@@ -24,9 +25,10 @@
     <string name="user_name">User Name</string>
     <string name="SignIn">Sign In</string>
     <string name="SignUp">Sign Up</string>
+    <string name="send">Send</string>
     <string name="logout">Log out</string>
     <string name="busStarted">Bus Started</string>
-    <string name="notifyEmergency">Notify Emergency</string>
+    <string name="notify">Update Location</string>
     <string name="modify">Modify Route</string>
     <string name="drop_user">Drop User</string>
     <string name="announcement">Add Announcement</string>
@@ -63,5 +65,7 @@
     <string name="title_activity_admin_profile">ProfileActivity</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="title_activity_driver">DriverActivity</string>
+    <string name="title_activity_driver_location">DriverLocationActivity</string>
+    <string name="title_activity_driver_profile">DriverProfileActivity</string>
 
 </resources>

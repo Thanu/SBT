@@ -6,8 +6,8 @@ import android.content.Intent;
 public final class CommonUtilities {
      
     // give your server registration url here
-    static final String SERVER_URL = "http://10.0.2.2:8080/SBT/register.php";// 192.168.42.11:8080/SBT/register.php"; 
- 
+    static final String SERVER_URL = "http://192.168.42.11:8080/SBT/register.php";
+    static final String SERVER_IP ="http://192.168.42.11:8080/SBT/";
     // Google project id
     static final String SENDER_ID = "950813059284"; 
  

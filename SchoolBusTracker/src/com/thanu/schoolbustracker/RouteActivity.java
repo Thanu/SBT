@@ -1,12 +1,24 @@
 package com.thanu.schoolbustracker;
 
+import java.util.ArrayList;
+import static com.thanu.schoolbustracker.CommonUtilities.SERVER_IP;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +45,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 public class RouteActivity extends Activity implements OnMapClickListener,
 		OnMapLongClickListener, OnMarkerClickListener, OnClickListener {
 
+	SharedPreferences sharedPreferences;
+	int locationCount = 0;
+
 	final int RQS_GooglePlayServices = 1;
 	private GoogleMap myMap;
 
@@ -40,8 +55,18 @@ public class RouteActivity extends Activity implements OnMapClickListener,
 	boolean markerClicked;
 	PolylineOptions rectOptions;
 	Polyline polyline;
-	Button modifyRoute, save;
+	Button modifyRoute;
 	String name;
+	
+	public static final String PROVIDER_NAME = "com.thanu.schoolbustracker";
+	HttpClient httpClient;
+	HttpPost httpPost;
+	ArrayList<NameValuePair> nameValuePairs;
+	HttpResponse httpResponse;
+	HttpEntity entity;
+	String latitude, longitude, bus_hault, zoom;
+	double lat, lon;
+	float zoomLevel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +81,11 @@ public class RouteActivity extends Activity implements OnMapClickListener,
 		MapFragment myMapFragment = (MapFragment) myFragmentManager
 				.findFragmentById(R.id.map);
 		modifyRoute = (Button) findViewById(R.id.btnModifyRoute);
-		save = (Button) findViewById(R.id.save);
+		
 		myMap = myMapFragment.getMap();
 
 		if (myMap != null) {
-			myMap.setMyLocationEnabled(true);
-
+			
 			myMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 			myMap.getUiSettings().setCompassEnabled(false);
 			myMap.getUiSettings().setRotateGesturesEnabled(true);
@@ -73,13 +97,53 @@ public class RouteActivity extends Activity implements OnMapClickListener,
 					6.796923, 79.922433));
 			myMap.moveCamera(center);
 			CameraPosition cameraPosition = new CameraPosition.Builder()
-					.target(location)      // Sets the center of the map to Mountain View
-				    .zoom(10) // Sets the zoom
-					.bearing((float) 112.5) // Sets the orientation of the camera to east
+					.target(location) // Sets the center of the map to Mountain
+										// View
+					.zoom(10) // Sets the zoom
+					.bearing((float) 112.5) // Sets the orientation of the
+											// camera to east
 					.tilt(30) // Sets the tilt of the camera to 30 degrees
 					.build(); // Creates a CameraPosition from the builder
 			myMap.animateCamera(CameraUpdateFactory
 					.newCameraPosition(cameraPosition));
+
+			// Opening the sharedPreferences object
+			sharedPreferences = getSharedPreferences("location", 0);
+
+			// Getting number of locations already stored
+			locationCount = sharedPreferences.getInt("locationCount", 0);
+
+			// Getting stored zoom level if exists else return 0
+			String zoom = sharedPreferences.getString("zoom", "0");
+
+			// If locations are already saved
+			if (locationCount != 0) {
+
+				String lat = "";
+				String lng = "";
+
+				// Iterating through all the locations stored
+				for (int i = 0; i < locationCount; i++) {
+
+					// Getting the latitude of the i-th location
+					lat = sharedPreferences.getString("lat" + i, "0");
+
+					// Getting the longitude of the i-th location
+					lng = sharedPreferences.getString("lng" + i, "0");
+
+					// Drawing marker on the map
+					drawMarker(new LatLng(Double.parseDouble(lat),
+							Double.parseDouble(lng)));
+				}
+
+				// Moving CameraPosition to last clicked position
+				myMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(
+						Double.parseDouble(lat), Double.parseDouble(lng))));
+
+				// Setting the zoom level in the map on last position is clicked
+				myMap.animateCamera(CameraUpdateFactory.zoomTo(Float
+						.parseFloat(zoom)));
+			}
 
 			modifyRoute.setOnClickListener(this);
 			myMap.setOnMapClickListener(this);
@@ -146,8 +210,47 @@ public class RouteActivity extends Activity implements OnMapClickListener,
 	@Override
 	public void onMapLongClick(LatLng point) {
 		if (name == null || name.equalsIgnoreCase("Admin")) {
-			myMap.addMarker(new MarkerOptions().position(point).title(
-					point.toString()));
+			locationCount++;
+			
+			// Drawing marker on the map
+			drawMarker(point);
+	        
+	        /** Opening the editor object to write data to sharedPreferences */
+	        SharedPreferences.Editor editor = sharedPreferences.edit();	        
+	        
+	        // Storing the latitude for the i-th location
+	        editor.putString("lat"+ Integer.toString((locationCount-1)), Double.toString(point.latitude));
+	        
+	        // Storing the longitude for the i-th location
+	        editor.putString("lng"+ Integer.toString((locationCount-1)), Double.toString(point.longitude));
+	        
+	        // Storing the count of locations or marker count
+	        editor.putInt("locationCount", locationCount);		        
+	        
+	        /** Storing the zoom level to the shared preferences */
+	        editor.putString("zoom", Float.toString(myMap.getCameraPosition().zoom));		        
+
+	        /** Saving the values stored in the shared preferences */
+	        editor.commit();	
+	        
+	        // Setting latitude in ContentValues
+			lat = point.latitude;
+			latitude = (Double.valueOf(lat)).toString();
+			
+			// Setting longitude in ContentValues
+			lon = point.longitude;
+			longitude = (Double.valueOf(lon)).toString();
+			
+			// Setting zoom in ContentValues
+			zoomLevel = myMap.getCameraPosition().zoom;
+			zoom = (Float.valueOf(zoomLevel)).toString();
+			
+			// Creating an instance of LocationInsertTask
+			new LocationInsertTask().execute();
+
+	        
+	        Toast.makeText(getBaseContext(), "Marker is added to the Map", Toast.LENGTH_SHORT).show();			        
+	      
 
 			markerClicked = false;
 		}
@@ -180,15 +283,117 @@ public class RouteActivity extends Activity implements OnMapClickListener,
 
 	}
 
+	private void drawMarker(LatLng point) {
+		// Creating an instance of MarkerOptions
+		MarkerOptions markerOptions = new MarkerOptions();
+
+		// Setting latitude and longitude for the marker
+		markerOptions.position(point);
+
+		// Adding marker on the Google Map
+		myMap.addMarker(markerOptions);
+	}
+
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btnModifyRoute:// it will enable save button
-			save.setEnabled(true);
-			break;
-		case R.id.save:// saving changes
+		
+			// Removing the marker and circle from the Google Map
+			myMap.clear();			
+			// Opening the editor object to delete data from sharedPreferences
+	        SharedPreferences.Editor editor = sharedPreferences.edit();	        
+	        // Clearing the editor
+	        editor.clear();			
+	        // Committing the changes
+			editor.commit();			
+			// Setting locationCount to zero
+			locationCount=0;
+			new LocationDeleteTask().execute();
+			
+	}
+	private class LocationInsertTask extends AsyncTask<String, String, String> {
+		@Override
+		protected String doInBackground(String... args) {
+			try {
 
-			break;
+				// Storing the latitude, longitude and zoom level to database
+
+				String url = SERVER_IP+"insert.php";				// url of
+																	// the
+																	// signup.php
+				JSONParser parser = new JSONParser();
+				nameValuePairs = new ArrayList<NameValuePair>();
+				nameValuePairs
+						.add(new BasicNameValuePair("latitude", latitude));
+				nameValuePairs.add(new BasicNameValuePair("longitude",
+						longitude));
+				nameValuePairs.add(new BasicNameValuePair("zoom", zoom));
+
+				String success = parser.makeHttpRequest(url, nameValuePairs)
+						.trim();// getting the response from httpPOST request
+
+				// validate registration
+				if (success.equalsIgnoreCase("true")) {
+					Log.d("Register", "Places are inserted in db");
+
+				} else {
+					Log.d("Register", "Places are inserted in db");
+
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.d("Error!", "Connection error");
+
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getBaseContext(), "Connection Error",
+								Toast.LENGTH_SHORT).show();
+					}
+				});
+			}
+			return null;
+		}
+	}
+
+	private class LocationDeleteTask extends AsyncTask<String, String, String> {
+		// Deleting all the rows from database table
+		@Override
+		protected String doInBackground(String... args) {
+			try {
+
+				String url = SERVER_IP+"delete.php";//"http://192.168.42.11:8080/SBT/delete.php";// 192.168.42.11:8080/SBT/signup.php";//
+																	// url of
+																	// the
+																	// signup.php
+				JSONParser parser = new JSONParser();
+				nameValuePairs = new ArrayList<NameValuePair>();
+
+				String success = parser.makeHttpRequest(url, nameValuePairs)
+						.trim();// getting the response from httpPOST request
+
+				// validate registration
+				if (success.equalsIgnoreCase("true")) {
+					Log.d("Register", "All places are deleted in db");
+
+				} else {
+					Log.d("Register", "All places not deleted in db");
+
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.d("Error!", "Connection error");
+
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getBaseContext(), "Connection Error",
+								Toast.LENGTH_SHORT).show();
+					}
+				});
+			}
+			return null;
 		}
 	}
 

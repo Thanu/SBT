@@ -7,16 +7,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
-
-import com.thanu.schoolbustracker.AdminProfileActivity.AttemptDeleteUser;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,8 +21,7 @@ import android.widget.Toast;
 
 public class DriverActivity extends Activity implements OnClickListener{
 
-	EditText username;
-	Button busStarted, notifyEmergency, dropUser, logout;
+	Button busStarted, logout;
 	String uname;
 
 	HttpClient httpClient;
@@ -40,11 +35,9 @@ public class DriverActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_driver);
 		busStarted = (Button) findViewById(R.id.busStarted);
-		notifyEmergency = (Button) findViewById(R.id.notifyEmergency);
 		logout = (Button) findViewById(R.id.driver_logout);
 
 		busStarted.setOnClickListener(this);
-		notifyEmergency.setOnClickListener(this);
 		logout.setOnClickListener(this);
 	}
 
@@ -52,8 +45,7 @@ public class DriverActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.busStarted :// notify bus started
-			break;
-		case R.id.notifyEmergency:// notify emergency details
+			new AttemptAddAnnouncement().execute();
 			break;
 		case R.id.driver_logout:// log out
 			logout();
@@ -70,61 +62,36 @@ public class DriverActivity extends Activity implements OnClickListener{
 		startActivity(i);
 	}
 
-	class AttemptDeleteUser extends AsyncTask<String, String, String> {
-
+	class AttemptAddAnnouncement extends AsyncTask<String, String, String> {
+		final Context context = DriverActivity.this;
 		@Override
 		protected String doInBackground(String... args) {
-			String url = "http://192.168.42.11:8080/SBT/dropUser.php";
+			
 			nameValuePairs = new ArrayList<NameValuePair>();
-			uname = username.getText().toString();
-			System.out.println(uname);
 			try {
+				
+				final String msg = "Your bus has started the journey";
+				ServerUtilities.addAnnouncement(context, msg);
 
-				if (!(uname.equals(null))) {
-					System.out.println(uname);
-					JSONParser parser = new JSONParser();
-					nameValuePairs
-							.add(new BasicNameValuePair("username", uname));
-					String success = parser
-							.makeHttpRequest(url, nameValuePairs).trim();
-					System.out.println(success);
-					// validate user drop
-					if (success.equalsIgnoreCase("true")) {
-						Log.d("Drop!", "User is deleted");
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								Toast.makeText(getBaseContext(),
-										"User is deleted", Toast.LENGTH_SHORT)
-										.show();
-								username.setText("");
-							}
-						});
-
-					} else {
-						Log.d("Drop!", "User is not deleted");
-						Log.d("Success", success + "9");
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								Toast.makeText(getBaseContext(),
-										"Unknown User", Toast.LENGTH_SHORT)
-										.show();
-								username.setText("");
-
-							}
-						});
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getBaseContext(), "Message sent",
+								Toast.LENGTH_SHORT).show();
 					}
-				}
+				});
+				return null;
+
 			} catch (Exception e) {
 				e.printStackTrace();
-				Log.d("Error!", "Connection error");
+				Log.d("Error!", "Announcement not sent");
 
 				// Toast.makeText(getBaseContext(),"Connection Error",Toast.LENGTH_SHORT).show();
 			}
 			return null;
 		}
 	}
+	
+	
 
 }

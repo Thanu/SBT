@@ -6,34 +6,6 @@
         android:layout_width="fill_parent"
         android:layout_height="462dp" >
 
-        <LinearLayout
-            android:id="@+id/header"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/btnAnnouncement"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="14dp"
-            android:paddingBottom="5dip"
-            android:paddingTop="5dip" >
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:src="@drawable/sbt_icon" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnAnnouncement"
-            android:layout_width="185dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/btnDropUser"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="28dp"
-            android:layout_toLeftOf="@+id/drop_uder_id"
-            android:text="@string/announcement" />
-
         <Button
             android:id="@+id/btnDropUser"
             android:layout_width="185dp"
@@ -74,6 +46,53 @@
             android:text="@string/title_activity_admin"
             android:textColor="#025f7c"
             android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView1"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip" >
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:src="@drawable/sbt_icon" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/btnAnnouncement"
+            android:layout_marginTop="23dp"
+            android:enabled ="false"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/message"
+            android:layout_alignRight="@+id/drop_uder_id"
+            android:enabled="false"
+            android:text="@string/send" />
+
+        <Button
+            android:id="@+id/btnAnnouncement"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header"
+            android:layout_marginTop="15dp"
+            android:layout_toLeftOf="@+id/drop_uder_id"
+            android:text="@string/announcement" />
 
     </RelativeLayout>
 

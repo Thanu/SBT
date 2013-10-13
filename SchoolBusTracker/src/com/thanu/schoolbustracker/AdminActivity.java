@@ -24,7 +24,7 @@ public class AdminActivity extends TabActivity {
 		// Tab for Admin functions		
 		TabSpec profilespec = tabHost.newTabSpec("AdminPage");
 		// setting Title and Icon for the Tab
-		profilespec.setIndicator("Admin",
+		profilespec.setIndicator("",
 				getResources().getDrawable(R.drawable.icon_profile_tab));
 		Intent profileIntent = new Intent(this, AdminProfileActivity.class);
 		profileIntent.putExtra("uname",uname);
@@ -34,7 +34,7 @@ public class AdminActivity extends TabActivity {
 
 		// Tab for route
 		TabSpec routespec = tabHost.newTabSpec("Route");
-		routespec.setIndicator("Route",
+		routespec.setIndicator("",
 				getResources().getDrawable(R.drawable.icon_route_tab));
 		Intent routeIntent = new Intent(this, RouteActivity.class);
 		routeIntent.putExtra("uname",uname);

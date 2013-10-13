@@ -1,7 +1,7 @@
 package com.thanu.schoolbustracker;
 
 import java.util.ArrayList;
-
+import static com.thanu.schoolbustracker.CommonUtilities.SERVER_IP;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -138,7 +138,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 
 		@Override
 		protected String doInBackground(String... args) {
-			String url = "http://10.0.2.2:8080/SBT/getUser.php";//192.168.42.11:8080/SBT/getUser.php";
+			String url = SERVER_IP+"getUser.php";
 			JSONParser parser = new JSONParser();
 
 			try {
@@ -209,7 +209,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 
 		@Override
 		protected String doInBackground(String... args) {
-			String url = "http://10.0.2.2:8080/SBT/changePassword.php";//192.168.42.11:8080/SBT/changePassword.php";
+			String url = SERVER_IP+"changePassword.php";
 
 			pword = txt_password.getText().toString();
 			pword1 = txt_password1.getText().toString();
@@ -276,7 +276,7 @@ public class MyProfileActivity extends Activity implements OnClickListener {
 
 		@Override
 		protected String doInBackground(String... args) {
-			String url = "http://10.0.2.2:8080/SBT/updateProfile.php";//192.168.42.11:8080/SBT/updateProfile.php";
+			String url = SERVER_IP+"updateProfile.php";
 			fullname = txt_fname.getText().toString();
 			place = txt_address.getText().toString();
 			phoneNo = txt_phone.getText().toString();
