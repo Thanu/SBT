@@ -120,6 +120,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         // Vibrate if vibrate is enabled
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notificationManager.notify(0, notification); 
+        Log.i(TAG, "Notifying receiver");
         
     }
  

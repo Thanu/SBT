@@ -52,7 +52,7 @@ public class NotificationActivity extends Activity {
 			return;
 		}
 		
-		// Getting name, email from intent
+		// Getting uname, name, email from intent
 		Intent i = getIntent();
 		uname = i.getStringExtra("uname");
 		name = i.getStringExtra("name");
@@ -61,8 +61,7 @@ public class NotificationActivity extends Activity {
 		// Make sure the device has the proper dependencies.
 		GCMRegistrar.checkDevice(this);
 
-		// Make sure the manifest was properly set - comment out this line
-		// while developing the app, then uncomment it when it's ready.
+		// Make sure the manifest was properly set
 		GCMRegistrar.checkManifest(this);
 
 		lblMessage = (TextView) findViewById(R.id.lblMessage);
@@ -113,13 +112,7 @@ public class NotificationActivity extends Activity {
 			String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
 			// Waking up mobile if it is sleeping
 			WakeLocker.acquire(getApplicationContext());
-			
-			/**
-			 * Take appropriate action on this message
-			 * depending upon your app requirement
-			 * For now i am just displaying it on the screen
-			 * */
-			
+						
 			// Showing received message
 			lblMessage.append(newMessage + "\n");			
 			Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();

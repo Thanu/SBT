@@ -95,7 +95,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		@Override
 		protected String doInBackground(String... args) {
 
-			String url = "http://10.0.2.2:8080/SBT/signin.php";// url of php file needed for login
+			String url = "http://10.0.2.2:8080/SBT/signin.php";//192.168.42.11:8080/SBT/signin.php";// url of php file needed for login
 			username = uname.getText().toString();
 			password = pword.getText().toString();
 
@@ -179,7 +179,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	public void retrieveUser() {
 
-		String url = "http://10.0.2.2:8080/SBT/getUser.php";
+		String url = "http://10.0.2.2:8080/SBT/getUser.php";//192.168.42.11:8080/SBT/getUser.php";
 		JSONParser parser = new JSONParser();
 
 		try {

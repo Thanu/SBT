@@ -39,8 +39,7 @@ public final class ServerUtilities {
         
         long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
         // Once GCM returns a registration id, we need to register on our server
-        // As the server might be down, we will retry it a couple
-        // times.
+        // As the server might be down, we will retry it a couple times.
         for (int i = 1; i <= MAX_ATTEMPTS; i++) {
             Log.d(TAG, "Attempt #" + i + " to register");
             try {
@@ -52,9 +51,7 @@ public final class ServerUtilities {
                 CommonUtilities.displayMessage(context, message);
                 return;
             } catch (IOException e) {
-                // Here we are simplifying and retrying on any error; in a real
-                // application, it should retry only on unrecoverable errors
-                // (like HTTP error code 503).
+                // Here we are simplifying and retrying on any error
                 Log.e(TAG, "Failed to register on attempt " + i + ":" + e);
                 if (i == MAX_ATTEMPTS) {
                     break;
@@ -93,23 +90,14 @@ public final class ServerUtilities {
         } catch (IOException e) {
             // At this point the device is unregistered from GCM, but still
             // registered in the server.
-            // We could try to unregister again, but it is not necessary:
-            // if the server tries to send a message to the device, it will get
-            // a "NotRegistered" error message and should unregister the device.
+           
             String message = context.getString(R.string.server_unregister_error,
                     e.getMessage());
             CommonUtilities.displayMessage(context, message);
         }
     }
 
-    /**
-     * Issue a POST request to the server.
-     *
-     * @param endpoint POST address.
-     * @param params request parameters.
-     *
-     * @throws IOException propagated from POST.
-     */
+
     private static void post(String endpoint, Map<String, String> params)
             throws IOException {   	
         

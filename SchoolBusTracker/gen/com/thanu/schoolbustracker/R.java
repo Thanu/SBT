@@ -205,7 +205,7 @@ containing a value of this type.
         public static final int btnDropUser=0x7f050007;
         public static final int btnLogin=0x7f050012;
         public static final int btnLogout=0x7f05002c;
-        public static final int btnModifyRoute=0x7f050033;
+        public static final int btnModifyRoute=0x7f050032;
         public static final int btnRegister=0x7f05002f;
         public static final int btnSave=0x7f05002a;
         public static final int btnSignIn=0x7f050015;
@@ -238,7 +238,7 @@ containing a value of this type.
         public static final int register_scroll=0x7f05002e;
         public static final int register_status=0x7f050030;
         public static final int satellite=0x7f050002;
-        public static final int save=0x7f050032;
+        public static final int save=0x7f050033;
         public static final int status=0x7f050013;
         public static final int terrain=0x7f050003;
         public static final int textView1=0x7f05000a;

@@ -12,15 +12,6 @@
         class="com.google.android.gms.maps.MapFragment" />
 
     <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:enabled="false"
-        android:layout_alignParentTop="true"
-        android:text="@string/save" />
-
-    <Button
         android:id="@+id/btnModifyRoute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,6 +19,16 @@
         android:enabled="false"
         android:layout_alignParentTop="true"
         android:text="@string/modify" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/btnModifyRoute"
+        android:enabled="false"
+        android:text="@string/save" />
 
 </RelativeLayout>
 <!-- <?xml version="1.0" encoding="utf-8"?> -->

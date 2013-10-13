@@ -74,7 +74,7 @@ int id btnChangePassword 0x7f050028
 int id btnDropUser 0x7f050007
 int id btnLogin 0x7f050012
 int id btnLogout 0x7f05002c
-int id btnModifyRoute 0x7f050033
+int id btnModifyRoute 0x7f050032
 int id btnRegister 0x7f05002f
 int id btnSave 0x7f05002a
 int id btnSignIn 0x7f050015
@@ -107,7 +107,7 @@ int id pword 0x7f050011
 int id register_scroll 0x7f05002e
 int id register_status 0x7f050030
 int id satellite 0x7f050002
-int id save 0x7f050032
+int id save 0x7f050033
 int id status 0x7f050013
 int id terrain 0x7f050003
 int id textView1 0x7f05000a

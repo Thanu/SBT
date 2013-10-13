@@ -123,7 +123,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 				if (pword.equals(pword1)) {// if the password and re-entered
 											// password are equal
 
-					String url = "http://10.0.2.2:8080/SBT/signup.php";// url of
+					String url = "http://10.0.2.2:8080/SBT/signup.php";//192.168.42.11:8080/SBT/signup.php";// url of
 																		// the
 																		// signup.php
 					JSONParser parser = new JSONParser();
