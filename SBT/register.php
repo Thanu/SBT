@@ -7,10 +7,11 @@ $json = array();
  * Registering a user device
  * Store reg id in users table
  */
-if (isset($_POST["uname"]) && isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["regId"])) {
+if (isset($_POST["uname"]) && isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["regId"]) && isset($_POST["message"])) {
 	$uname = $_POST["uname"];
     $name = $_POST["name"];
     $email = $_POST["email"];
+	$message = $_POST["message"];
     $gcm_regid = $_POST["regId"]; // GCM Registration ID
     // Store user details in db
     include_once './db_functions.php';
@@ -22,7 +23,7 @@ if (isset($_POST["uname"]) && isset($_POST["name"]) && isset($_POST["email"]) &&
     $res = $db->storeUser($uname,$name, $email, $gcm_regid);
  
     $registatoin_ids = array($gcm_regid);
-    $message = array("product" => "shirt");
+    $message = array("msg" => $message);
  
     $result = $gcm->send_notification($registatoin_ids, $message);
  

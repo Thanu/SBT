@@ -8,7 +8,7 @@ if (isset($_GET["message"])) {
     
     include_once './db_functions.php';
     include_once './GCM.php';
-	
+	$message = array("msg" => $message);
     $gcm = new GCM();    
 	$users = mysql_query("select gcm_regid FROM gcm_users");
     if (mysql_num_rows($users) > 0) {

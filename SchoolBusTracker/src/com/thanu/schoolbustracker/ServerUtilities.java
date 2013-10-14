@@ -32,11 +32,13 @@ public final class ServerUtilities {
     static void register(final Context context,String uname, String name, String email, final String regId) {
         Log.i(TAG, "registering device (regId = " + regId + ")");
         String serverUrl = SERVER_URL;
+        final String message = "Welcome to SBT!!!";
         Map<String, String> params = new HashMap<String, String>();
         params.put("regId", regId);
         params.put("uname", uname);
         params.put("name", name);
         params.put("email", email);
+        params.put("message", message);
         
         long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
         // Once GCM returns a registration id, we need to register on our server
@@ -48,8 +50,8 @@ public final class ServerUtilities {
                         R.string.server_registering, i, MAX_ATTEMPTS));
                 post(serverUrl, params);
                 GCMRegistrar.setRegisteredOnServer(context, true);
-                String message = context.getString(R.string.server_registered);
-                CommonUtilities.displayMessage(context, message);
+                String msg = context.getString(R.string.server_registered);
+                CommonUtilities.displayMessage(context, msg);
                 return;
             } catch (IOException e) {
                 // Here we are simplifying and retrying on any error
@@ -70,9 +72,9 @@ public final class ServerUtilities {
                 backoff *= 2;
             }
         }
-        String message = context.getString(R.string.server_register_error,
+        String msg = context.getString(R.string.server_register_error,
                 MAX_ATTEMPTS);
-        CommonUtilities.displayMessage(context, message);
+        CommonUtilities.displayMessage(context, msg);
     }
 
     /**
